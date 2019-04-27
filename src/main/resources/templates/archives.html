@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Archives</title>
+
+    <div th:replace="common::resources"></div>
+</head>
+<body>
+<div th:replace="common::main-nav"></div>
+<div th:replace="common::profile"></div>
+
+<section id="wrapper">
+    <div class="archive">
+        <ul>
+            <div class="post-item" th:each="article: ${articles}">
+                <div class="post-time" th:text="${#dates.format(article.createTimestamp, 'MMM d')}"></div>
+                <a class="post-link" th:href="@{'/article/' + ${article.articleId}}" th:text="${article.title}"></a>
+            </div>
+        </ul>
+    </div>
+
+    <nav id="post-nav">
+        <span class="prev">
+            <a th:href="@{/index/(page=${page -1}, limit=${limit})}" th:if="${page} > 0">Newer Posts<span class="arrow">←</span></a>
+        </span>
+        <span class="next">
+            <a th:href="@{/index/(page=${page +1}, limit=${limit})}" th:if="${page} < ${pageCount -1}">Older Posts<span class="arrow">→</span></a>
+        </span>
+    </nav>
+</section>
+
+<div th:replace="common::footer"></div>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
