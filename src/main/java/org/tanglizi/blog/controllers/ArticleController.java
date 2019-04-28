@@ -10,13 +10,13 @@ import org.tanglizi.blog.services.ArticleService;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/article")
+@RequestMapping("/articles")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
     @GetMapping("/{id}")
-    public String arcticlePage(@PathVariable("id") Integer articleId, Map map){
+    public String arcticlesPage(@PathVariable("id") Integer articleId, Map map){
         Article article = articleService.findArticleById(articleId);
         long articleCount = articleService.findArticleCount();
 
@@ -24,6 +24,6 @@ public class ArticleController {
         map.put("articleCount", articleCount);
         map.put("markdownContent", FlexmarkConfig.FlexmarkParser.parse(article.getContent()));
 
-        return "article";
+        return "articles";
     }
 }

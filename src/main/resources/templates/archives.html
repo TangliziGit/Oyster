@@ -24,7 +24,7 @@
 
     <nav id="post-nav">
         <span class="prev">
-            <a th:href="@{/index/(page=${page -1}, limit=${limit})}" th:if="${page} > 0">Newer Posts<span class="arrow">←</span></a>
+            <a th:href="@{/index/(page=${page -1}, limit=${limit})}" th:if="${page} > 0"><span class="arrow">←</span>Newer Posts</a>
         </span>
         <span class="next">
             <a th:href="@{/index/(page=${page +1}, limit=${limit})}" th:if="${page} < ${pageCount -1}">Older Posts<span class="arrow">→</span></a>

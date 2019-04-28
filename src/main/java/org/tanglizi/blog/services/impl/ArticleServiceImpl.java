@@ -17,7 +17,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Page<Article> findArticles(int pageNumber, int limit) {
-        Page<Article> articlePage=articleRepository.findAll(PageRequest.of(pageNumber, limit, Sort.by("createTimestamp")));
+        Page<Article> articlePage=articleRepository.findAll(
+                PageRequest.of(pageNumber, limit, Sort.by("createTimestamp")));
         return articlePage;
     }
 
