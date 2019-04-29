@@ -17,7 +17,7 @@
         <ul>
             <div class="post-item" th:each="article: ${articles}">
                 <div class="post-time" th:text="${#dates.format(article.createTimestamp, 'MMM d')}"></div>
-                <a class="post-link" th:href="@{'/article/' + ${article.articleId}}" th:text="${article.title}"></a>
+                <a class="post-link" th:href="@{'/articles/' + ${article.articleId}}" th:text="${article.title}"></a>
             </div>
         </ul>
     </div>
