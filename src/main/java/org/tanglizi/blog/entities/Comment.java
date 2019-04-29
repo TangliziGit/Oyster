@@ -6,12 +6,16 @@ import java.util.Date;
 @Entity
 @Table(name = "comment")
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
 
     @Column
     private Integer articleId;
+
+    @Column
+    private String content;
 
     @Column
     private String userName;
@@ -27,10 +31,19 @@ public class Comment {
         return "Comment{" +
                 "commentId=" + commentId +
                 ", articleId=" + articleId +
+                ", content='" + content + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", createTimestamp=" + createTimestamp +
                 '}';
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Integer getCommentId() {

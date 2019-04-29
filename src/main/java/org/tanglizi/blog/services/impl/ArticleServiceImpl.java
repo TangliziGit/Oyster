@@ -9,6 +9,7 @@ import org.tanglizi.blog.dao.repositories.ArticleRepository;
 import org.tanglizi.blog.services.ArticleService;
 
 import javax.annotation.Resource;
+import java.util.Optional;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -17,15 +18,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Page<Article> findArticles(int pageNumber, int limit) {
-        Page<Article> articlePage=articleRepository.findAll(
+        return articleRepository.findAll(
                 PageRequest.of(pageNumber, limit, Sort.by("createTimestamp")));
-        return articlePage;
     }
 
     @Override
     public Article findArticleById(Integer id) {
-        // ?
-        return articleRepository.findById(id).get();
+        return articleRepository.findById(id).orElse(null);
     }
 
     @Override

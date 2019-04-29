@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.tanglizi.blog.entities.Comment;
 import org.tanglizi.blog.services.CommentService;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -27,6 +28,7 @@ public class CommentController {
     @PostMapping
     @ResponseBody
     public Comment makeComment(Comment comment){
+        comment.setCreateTimestamp(new Date());
         return commentService.insertComment(comment);
     }
 }

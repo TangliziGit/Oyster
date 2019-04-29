@@ -25,13 +25,26 @@
 
         <nav id="post-nav">
             <span class="prev">
-                <a th:href="@{'/article/' + ${article.articleId-1}}" th:if="${article.articleId} > 1"><span class="arrow">←</span>Newer Posts</a>
+                <a th:href="@{'/articles/' + ${article.articleId-1}}" th:if="${article.articleId} > 1"><span class="arrow">←</span>Newer Posts</a>
             </span>
             <span class="next">
-                <a th:href="@{'/article/' + ${article.articleId+1}}" th:if="${article.articleId} < ${articleCount}">Older Posts<span class="arrow">→</span></a>
+                <a th:href="@{'/articles/' + ${article.articleId+1}}" th:if="${article.articleId} < ${articleCount}">Older Posts<span class="arrow">→</span></a>
             </span>
         </nav>
     </article>
+
+    <hr />
+
+    <div class="comment">
+        <form th:action="@{/comments}" method="post">
+            <input name="articleId" th:value="${article.articleId}" type="hidden" />
+            Name: <input name="userName" type="text" />
+            Email: <input name="userEmail" type="email"/> <br />
+            <input name="content" type="text" style="width: 535px; height:100px"/> <br />
+
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
 </section>
 
 <div th:replace="common::footer"></div>

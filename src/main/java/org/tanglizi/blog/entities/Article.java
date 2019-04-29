@@ -9,7 +9,7 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer articleId;
-
+    
     @Column
     private String title;
 

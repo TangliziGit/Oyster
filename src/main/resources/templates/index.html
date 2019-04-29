@@ -16,7 +16,7 @@
     <ul id="post-list">
         <li th:object="${article}" th:each="article: ${articles}">
             <aside class="dates" th:text="${#dates.format(article.createTimestamp, 'MMM d')}"></aside>
-            <a th:href="@{'/article/'+${article.articleId}}">
+            <a th:href="@{'/articles/'+${article.articleId}}">
                 [[*{title}]]
                 <h2><p th:text="*{content.length() > 50} ? *{content.substring(0, 50)} : *{content}"></p></h2>
             </a>

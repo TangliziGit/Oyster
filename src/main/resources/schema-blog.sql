@@ -5,17 +5,18 @@ create table `article`(
     content                     text not null,
     allow_comment               boolean not null default(0),
     hit                         int default(0),
-    create_timestamp            timestamp default(now()),
-    last_modified_timestamp     timestamp default(now())
+    create_timestamp            timestamp default(now()) not null,
+    last_modified_timestamp     timestamp default(now()) not null
 );
 
 drop table if exists `comment`;
 create table `comment`(
     comment_id                  int primary key auto_increment,
     article_id                  int not null,
+    content                     text not null,
     user_name                   char(20),
     user_email                  varchar(50),
-    create_timestamp            timestamp default(now())
+    create_timestamp            timestamp default(now()) not null
 );
 
 drop table if exists `category`;
