@@ -5,12 +5,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.tanglizi.blog.dao.repositories.CommentRepository;
-import org.tanglizi.blog.entities.Comment;
+import org.tanglizi.blog.dto.entities.Comment;
 import org.tanglizi.blog.services.CommentService;
 
 import javax.annotation.Resource;
-import javax.swing.text.html.Option;
-import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {

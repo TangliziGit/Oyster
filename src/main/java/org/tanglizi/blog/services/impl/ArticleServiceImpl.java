@@ -4,12 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.tanglizi.blog.entities.Article;
+import org.tanglizi.blog.dto.entities.Article;
 import org.tanglizi.blog.dao.repositories.ArticleRepository;
 import org.tanglizi.blog.services.ArticleService;
 
 import javax.annotation.Resource;
-import java.util.Optional;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {

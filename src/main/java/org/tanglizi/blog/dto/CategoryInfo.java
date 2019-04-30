@@ -1,4 +1,4 @@
-package org.tanglizi.blog.dto.entities;
+package org.tanglizi.blog.dto;
 
 import java.util.List;
 

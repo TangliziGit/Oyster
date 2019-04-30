@@ -3,7 +3,7 @@ package org.tanglizi.blog.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.tanglizi.blog.entities.Comment;
+import org.tanglizi.blog.dto.entities.Comment;
 import org.tanglizi.blog.services.CommentService;
 
 import java.util.Date;

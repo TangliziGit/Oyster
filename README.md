@@ -8,13 +8,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-jdk 1.8 or later.
+jdk 1.8 or later
 
 ### How to run
 
 ```
-java -jar blog.jar -Dserver.port=80
+mvn clean package -Dmaven.test.skip=true
+java -jar blog-0.0.1-SNAPSHOT.jar --server.port=80
 ```
+Then you can check your blog on 80 port.
 
 ## Built With
 
@@ -23,17 +25,20 @@ java -jar blog.jar -Dserver.port=80
 - Spring MVC
 - Spring Data JPA
 - Thymeleaf
-- Flexmark
+- Flexmark  
     a markdown parser
 
 ## TODO List
+
 - front pages
-    - search functions
-        provide fuzzy and multiple search functions on title, content and etc. for articles and comments
-    - more theme
+    - show comments list  
+        in default theme
+    - search functions  
+        provide fuzzy and multiple search functions on title, content and etc., for articles and comments
+    - more theme  
         maybe use hexo to generate theme htmls.
 - background management
-    - markdown edit
+    - markdown edit  
         real time
 - RESTful API
 - docker supports

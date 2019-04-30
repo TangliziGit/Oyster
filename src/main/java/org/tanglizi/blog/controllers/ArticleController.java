@@ -3,9 +3,9 @@ package org.tanglizi.blog.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.tanglizi.blog.configurations.BlogConfig;
 import org.tanglizi.blog.configurations.FlexmarkConfig;
-import org.tanglizi.blog.entities.Article;
+import org.tanglizi.blog.dto.entities.Article;
 import org.tanglizi.blog.exceptions.PageNotFoundException;
 import org.tanglizi.blog.services.ArticleService;
 
@@ -30,6 +30,6 @@ public class ArticleController {
         map.put("articleCount", articleCount);
         map.put("markdownContent", FlexmarkConfig.FlexmarkParser.parse(article.getContent()));
 
-        return "articles";
+        return BlogConfig.THEME_PATH+"articles";
     }
 }

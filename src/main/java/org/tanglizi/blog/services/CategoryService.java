@@ -1,8 +1,7 @@
 package org.tanglizi.blog.services;
 
-import org.springframework.data.domain.Page;
-import org.tanglizi.blog.entities.Category;
-import org.tanglizi.blog.entities.CategoryInfo;
+import org.tanglizi.blog.dto.entities.Category;
+import org.tanglizi.blog.dto.CategoryInfo;
 
 import java.util.List;
 

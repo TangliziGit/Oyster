@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tanglizi.blog.entities.Category;
-import org.tanglizi.blog.entities.CategoryInfo;
+import org.tanglizi.blog.dto.entities.Category;
+import org.tanglizi.blog.dto.CategoryInfo;
 import org.tanglizi.blog.services.CategoryService;
 
 import java.util.List;

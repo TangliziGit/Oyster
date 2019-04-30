@@ -1,4 +1,4 @@
-package org.tanglizi.blog.entities;
+package org.tanglizi.blog.dto.entities;
 
 import javax.persistence.*;
 import java.util.Date;
