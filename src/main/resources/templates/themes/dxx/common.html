@@ -7,6 +7,7 @@
         <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
         <link rel="stylesheet" th:href="@{/css/github.min.css}" />
         <script th:src="@{/js/highlight.min.js}"></script>
+        <script th:src="@{/js/common.js}"></script>
         <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
     </div>
 </head>
@@ -14,8 +15,12 @@
 <body>
 
 <nav class="main-nav" th:fragment="main-nav">
-    <a th:href="@{/}">Home</a>
-    <a href="/archives">Archives</a>
+    <form method="post" th:action="@{/search}" style="float: right;">
+        <input id="searchBar" type="text" style="font-size:small" name="titleLike" placeholder="Search for articles" />
+        <input id="searchBarSubmit" type="submit" style="display: none;" />
+    </form>
+    <a style="float: right;" th:href="@{/}">Home</a>
+    <a style="float: right;" th:href="@{/archives}">Archives</a>
 </nav>
 
 <div class="profile" th:fragment="profile">

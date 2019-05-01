@@ -31,13 +31,13 @@ Then you can check your blog on 80 port.
 ## TODO List
 
 - front pages
-    - search functions  
-        provide fuzzy and multiple search functions on title, content and etc., for articles and comments
-    - more theme  
-        maybe use hexo to generate theme htmls.
+    - [ ] search functions  
+        *provide multiple search functions on title, content and etc., for articles and comments*
+    - [ ] more theme  
+        *maybe use hexo to generate theme htmls.*
 - background management
-    - markdown edit  
-        real time
+    - [ ] markdown edit  
+        *real time*
 - RESTful API
 - docker supports
 

@@ -52,8 +52,6 @@ public class ArticleController {
                 tagService.findTagsByArticleId(articleId)
         );
 
-        logger.debug(map.toString());
-
         return BlogConfig.THEME_PATH+"articles";
     }
 }

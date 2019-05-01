@@ -5,6 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +40,32 @@ public abstract class ExampleQuery<T> {
         return spec;
     };
 
+    protected void addPredicate(List<Predicate> predicates, Field field, QueryWord qw, CriteriaBuilder cb,
+                                Object value, Root root){
+        String fieldName=field.getName();
+        String column=qw.column();
+        Path path=root.get(column);
+
+        switch (qw.type()){
+            case LIKE:
+                predicates.add(cb.like(path, "%"+((String)value)+"%"));
+                break;
+            case EQUAL:
+                predicates.add(cb.equal(path, value));
+                break;
+            case NOT_LIKE:
+                predicates.add(cb.notLike(path, (String)value));
+                break;
+            case LESS_THAN:
+                // why not Comparable<T> ?
+                predicates.add(cb.greaterThan(path, (Comparable)value));
+                break;
+            case GREATER_THAN:
+                predicates.add(cb.lessThan(path, (Comparable)value));
+                break;
+        }
+    }
+
     protected Specification<T> toSpecWithLogicType(LogicType type){
         ExampleQuery outer=this;
         return (root, query, cb) -> {
@@ -55,27 +85,12 @@ public abstract class ExampleQuery<T> {
                     if (value==null) continue;
                     logger.debug("Field Value "+value.toString());
 
-                    String fieldName=field.getName();
-                    String column=qw.column();
-                    Path path=root.get(column);
-
-                    switch (qw.type()){
-                        case LIKE:
-                            predicates.add(cb.like(path, (String)value));
-                            break;
-                        case EQUAL:
-                            predicates.add(cb.equal(path, value));
-                            break;
-                        case NOT_LIKE:
-                            predicates.add(cb.notLike(path, (String)value));
-                            break;
-                        case LESS_THAN:
-                            // why not Comparable<T> ?
-                            predicates.add(cb.greaterThan(path, (Comparable)value));
-                            break;
-                        case GREATER_THAN:
-                            predicates.add(cb.lessThan(path, (Comparable)value));
-                            break;
+                    if (value instanceof List){
+                        List list=(List) value;
+                        for (Object elem: list)
+                            addPredicate(predicates, field, qw, cb, elem, root);
+                    }else {
+                        addPredicate(predicates, field, qw, cb, value, root);
                     }
 
                 } catch (IllegalAccessException e) {
@@ -223,4 +238,10 @@ public abstract class ExampleQuery<T> {
         NOT
     }
 
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
+    public static @interface QueryWord {
+        String column() default "";
+        MatchType type() default MatchType.EQUAL;
+    }
 }
