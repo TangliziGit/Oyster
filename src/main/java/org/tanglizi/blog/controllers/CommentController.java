@@ -35,6 +35,7 @@ public class CommentController {
         * TODO: 各种判断
         * */
 
+        commentService.insertComment(comment);
         return RESTfulResponse.ok();
     }
 }

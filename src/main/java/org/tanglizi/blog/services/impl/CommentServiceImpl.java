@@ -16,7 +16,7 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
 
     @Override
-    public Page<Comment> findCommentsByArticleId(Integer articleId, int pageNumber, int limit) {
+    public Page<Comment> findCommentPageByArticleId(Integer articleId, int pageNumber, int limit) {
         Page<Comment> commentPage = commentRepository.findCommentsByArticleId(articleId,
                 PageRequest.of(pageNumber, limit, Sort.by("createTimestamp")));
         return commentPage;

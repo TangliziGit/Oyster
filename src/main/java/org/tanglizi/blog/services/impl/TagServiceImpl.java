@@ -32,4 +32,9 @@ public class TagServiceImpl implements TagService {
             );
         }};
     }
+
+    @Override
+    public List<Tag> findTagsByArticleId(Integer articleId) {
+        return tagRepository.findTagsByArticleId(articleId);
+    }
 }

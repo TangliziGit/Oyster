@@ -16,7 +16,12 @@
     <article>
         <header>
             <h1 th:text="${article.title}"></h1>
-            <h2 class="headline">Jun 11, 2017 2:46[[${#dates.format(article.createTimestamp, 'MMM dd, yyyy h:mm')}]]&middot;?? words &middot;? minutes read<span class="tags"></span></h2>
+            <h2 class="headline">Jun 11, 2017 2:46[[${#dates.format(article.createTimestamp, 'MMM dd, yyyy h:mm')}]]&middot;?? words &middot;? minutes read</h2>
+            <div class="tags" style="font-size: small; margin: 0px 0px 40px 20px">
+                <span th:each="tag: ${tags}" style="float: left;margin-right: 2px; ">
+                    #[[${tag.name}]]
+                </span>
+            </div>
         </header>
 
         <section id="post-body">
@@ -25,34 +30,38 @@
 
         <nav id="post-nav">
             <span class="prev">
-                <a th:href="@{'/articles/' + ${article.articleId-1}}" th:if="${article.articleId} > 1"><span class="arrow">←</span>Newer Posts</a>
+                <a th:href="@{'/articles/' + ${prevArticleId}}" th:if="${prevArticleId}"><span class="arrow">←</span>Newer Posts</a>
             </span>
             <span class="next">
-                <a th:href="@{'/articles/' + ${article.articleId+1}}" th:if="${article.articleId} < ${articleCount}">Older Posts<span class="arrow">→</span></a>
+                <a th:href="@{'/articles/' + ${nextArticleId}}" th:if="${nextArticleId}">Older Posts<span class="arrow">→</span></a>
             </span>
         </nav>
     </article>
 
-    <hr />
-
     <div class="comment_editor">
-        <form th:action="@{/comments}" method="post">
+        <hr />
+
+        <form id="comment_form" th:action="@{/comments}" method="post">
             <!-- 默认垂直布局，float: left水平布局（width: 50%控制大小） -->
             <input name="articleId" th:value="${article.articleId}" type="hidden" />
             <input name="userName" type="text"  plceholder="Your Name" style="float: left; width: 50%;"/>
             <input name="userEmail" type="email" placeholder="Your Email" style="float: left; width: 50%"/> <br />
-            <textarea name="content" type="text" style="width: 100%; height:100px"></textarea> <br />
-
-            <input type="submit" value="Submit" style="float: right"/>
+            <textarea name="content" type="text" style="resize: none; width: 100%; height:100px"></textarea> <br />
         </form>
+        <button id="submitBtn" style="float: right">Submit</button>
     </div>
 
     <div class="comments">
+        <hr />
+
         <div th:each="comment: ${comments}">
             <hr style="border: 1px dashed; margin-bottom: 10px" />
 
             <span style="font-size: small; color: brown">
-                [[${comment.userName}]]<span style="font-size: small; color: #bbbbbb;" th:text="(${comment.userEmail})"></span>
+                [[${comment.userName}]]
+                <span style="font-size: small; color: #bbbbbb;">
+                    ([[${comment.userEmail}]])
+                </span>
                 :
             </span>
             <p th:text="${comment.content}">Content</p>
@@ -62,5 +71,23 @@
 
 <div th:replace="/themes/dxx/common::footer"></div>
 <script>hljs.initHighlightingOnLoad();</script>
+<script>
+    $("#submitBtn").on("click", function(){
+        var form=new FormData(document.getElementById("comment_form"));
+        $.post({
+            url: "/comments",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function(data){
+                window.location.reload();
+            },
+            error: function(data){
+                alert(data.message);
+            }
+        })}
+    );
+
+</script>
 </body>
 </html>

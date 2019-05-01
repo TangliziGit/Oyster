@@ -8,4 +8,5 @@ import java.util.List;
 public interface TagService {
     List<Tag> findAllTags();
     TagInfo getTagInfo(Integer tagId);
+    List<Tag> findTagsByArticleId(Integer articleId);
 }

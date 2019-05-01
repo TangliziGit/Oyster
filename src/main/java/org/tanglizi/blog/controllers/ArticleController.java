@@ -1,5 +1,7 @@
 package org.tanglizi.blog.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -11,16 +13,20 @@ import org.tanglizi.blog.dto.entities.Article;
 import org.tanglizi.blog.exceptions.PageNotFoundException;
 import org.tanglizi.blog.services.ArticleService;
 import org.tanglizi.blog.services.CommentService;
+import org.tanglizi.blog.services.TagService;
 
 import java.util.Map;
 
 @Controller
 @RequestMapping("/articles")
 public class ArticleController {
+    private Logger logger= LoggerFactory.getLogger(ArticleController.class);
     @Autowired
     private ArticleService articleService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("/{id}")
     public String arcticlesPage(@PathVariable("id") Integer articleId,
@@ -32,16 +38,21 @@ public class ArticleController {
         if (article==null)
             throw new PageNotFoundException();
 
-        long articleCount = articleService.findArticleCount();
+        Integer nextArticleId=articleService.findNextArticleId(articleId);
+        Integer prevArticleId=articleService.findPrevArticleId(articleId);
 
         map.put("article", article);
-        map.put("articleCount", articleCount);
         map.put("markdownContent", FlexmarkConfig.FlexmarkParser.parse(article.getContent()));
+        map.put("nextArticleId", nextArticleId);
+        map.put("prevArticleId", prevArticleId);
         map.put("comments",
-                commentService.findCommentsByArticleId(articleId, pageNumber, limit).getContent()
+                commentService.findCommentPageByArticleId(articleId, pageNumber, limit).getContent()
+        );
+        map.put("tags",
+                tagService.findTagsByArticleId(articleId)
         );
 
-        System.out.println(map);
+        logger.debug(map.toString());
 
         return BlogConfig.THEME_PATH+"articles";
     }
