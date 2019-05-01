@@ -31,8 +31,8 @@ Then you can check your blog on 80 port.
 ## TODO List
 
 - front pages
-    - [ ] search functions  
-        *provide multiple search functions on title, content and etc., for articles and comments*
+    - [x] search functions  
+        *provide multiple search functions on title and content for articles*
     - [ ] more theme  
         *maybe use hexo to generate theme htmls.*
 - background management

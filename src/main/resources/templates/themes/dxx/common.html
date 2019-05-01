@@ -16,7 +16,7 @@
 
 <nav class="main-nav" th:fragment="main-nav">
     <form method="post" th:action="@{/search}" style="float: right;">
-        <input id="searchBar" type="text" style="font-size:small" name="titleLike" placeholder="Search for articles" />
+        <input id="searchBar" type="text" style="font-size:small" name="searchLike" placeholder="Search for articles" />
         <input id="searchBarSubmit" type="submit" style="display: none;" />
     </form>
     <a style="float: right;" th:href="@{/}">Home</a>

@@ -6,10 +6,10 @@ import java.util.List;
 
 public class ArticleQueries extends ExampleQuery {
     @QueryWord(column = "title", type = MatchType.LIKE)
-    List<String> titleLikeList;
+    private List<String> titleLikeList;
 
     @QueryWord(column = "content", type = MatchType.LIKE)
-    List<String> contentLikeList;
+    private List<String> contentLikeList;
 
     public List<String> getTitleLikeList() {
         return titleLikeList;

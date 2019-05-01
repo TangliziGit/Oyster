@@ -23,15 +23,13 @@ public class SearchController {
     @PostMapping
     public String searchArticle(// @RequestParam(value = "titleLike", defaultValue = "") List<String> titleLikeList,
                                 // @RequestParam(value = "contentLike", defaultValue = "") List<String> contentLikeList,
-                                @RequestParam(value = "titleLike", defaultValue = "") String titleLike,
-                                @RequestParam(value = "contentLike", defaultValue = "") String contentLike,
+                                @RequestParam(value = "searchLike", defaultValue = "") String searchLike,
                                 @RequestParam(value = "page", defaultValue = "0") int pageNumber,
                                 @RequestParam(value = "limit", defaultValue = "20") int limit,
                                 Map map){
-        List<String> titleLikeList= Arrays.asList(titleLike.split(","));
-        List<String> contentLikeList=Arrays.asList(contentLike.split(","));
+        List<String> likeList=Arrays.asList(searchLike.split(","));
         Page<Article> articlePage=
-                articleService.findArticlesByLikeList(titleLikeList, contentLikeList, pageNumber, limit);
+                articleService.findArticlesByLikeList(likeList, likeList, pageNumber, limit);
 
         map.put("articles", articlePage.getContent());
         map.put("page", pageNumber);

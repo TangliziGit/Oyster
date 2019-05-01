@@ -22,6 +22,14 @@ public abstract class ExampleQuery<T> {
     private List<LogicSpecificationPair> logicSpecificationPairs;
     private LogicType combineLogicType=AND;
 
+    public LogicType getCombineLogicType() {
+        return combineLogicType;
+    }
+
+    public void setCombineLogicType(LogicType combineLogicType) {
+        this.combineLogicType = combineLogicType;
+    }
+
     public Specification<T> toSpec(){
         Specification<T> spec=this.toSpecWithLogicType(combineLogicType);
 
@@ -99,7 +107,7 @@ public abstract class ExampleQuery<T> {
             }
 
             Predicate result=null;
-            if (type== AND)
+            if (type==AND)
                 result = cb.and(predicates.toArray(new Predicate[predicates.size()]));
             else if (type==LogicType.OR)
                 result = cb.or(predicates.toArray(new Predicate[predicates.size()]));

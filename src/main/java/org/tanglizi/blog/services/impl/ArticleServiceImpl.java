@@ -47,6 +47,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Page<Article> findArticlesByLikeList(List<String> titleLkeList, List<String> contentLikeList,
                                                 int pageNumber, int limit) {
         return articleRepository.findAll(new ArticleQueries(){{
+            setCombineLogicType(LogicType.OR);
             setTitleLikeList(titleLkeList);
             setContentLikeList(contentLikeList);
         }}.toSpec(), PageRequest.of(pageNumber, limit, Sort.by("createTimestamp")));

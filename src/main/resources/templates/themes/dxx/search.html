@@ -14,12 +14,10 @@
 
 <section class="home" id="wrapper">
     <form th:action="@{/search}" method="post">
-        <p>
-            <input id="titleLike" name="titleLike" type="text" placeholder="Title includes" style="width: 100%;"></p>
         <p style="float:left; width: 78%">
-            <input id="contentLike" name="contentLike" type="text" placeholder="Content includes" style="width: 100%"></p>
+            <input id="searchLike" name="searchLike" type="text" placeholder="Search for articles" style="width: 100%"></p>
         <input id="searchSubmit" type="submit" value="Submit" style="float: right; width: 20%; height: 34px;">
-    </form>
+    </form><br />
 
     <ul id="post-list">
         <hr style="border: 1px dashed; margin-bottom: 10px" />
