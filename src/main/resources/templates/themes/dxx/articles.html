@@ -35,15 +35,28 @@
 
     <hr />
 
-    <div class="comment">
+    <div class="comment_editor">
         <form th:action="@{/comments}" method="post">
+            <!-- 默认垂直布局，float: left水平布局（width: 50%控制大小） -->
             <input name="articleId" th:value="${article.articleId}" type="hidden" />
-            Name: <input name="userName" type="text" />
-            Email: <input name="userEmail" type="email"/> <br />
-            <input name="content" type="text" style="width: 535px; height:100px"/> <br />
+            <input name="userName" type="text"  plceholder="Your Name" style="float: left; width: 50%;"/>
+            <input name="userEmail" type="email" placeholder="Your Email" style="float: left; width: 50%"/> <br />
+            <textarea name="content" type="text" style="width: 100%; height:100px"></textarea> <br />
 
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" style="float: right"/>
         </form>
+    </div>
+
+    <div class="comments">
+        <div th:each="comment: ${comments}">
+            <hr style="border: 1px dashed; margin-bottom: 10px" />
+
+            <span style="font-size: small; color: brown">
+                [[${comment.userName}]]<span style="font-size: small; color: #bbbbbb;" th:text="(${comment.userEmail})"></span>
+                :
+            </span>
+            <p th:text="${comment.content}">Content</p>
+        </div>
     </div>
 </section>
 

@@ -31,8 +31,6 @@ Then you can check your blog on 80 port.
 ## TODO List
 
 - front pages
-    - show comments list  
-        in default theme
     - search functions  
         provide fuzzy and multiple search functions on title, content and etc., for articles and comments
     - more theme  
