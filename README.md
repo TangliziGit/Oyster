@@ -1,22 +1,21 @@
-# SimpleBlog  
+# Oyster  
 
-This is a simple blog implemented with Spring Boot, Spring Data JPA, Thymeleaf and Flexmark.
+This is a simple blog for oysters with Spring Boot, Spring Data JPA, Thymeleaf and Flexmark.
+
+这是一个简单个人博客，采用多模块构建，主要技术栈为spring-boot, spring-data-jpa, thymeleaf和flexmark.
 
 ## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development.
 
 ### Prerequisites
 
 jdk 1.8 or later
 
-### How to run
+### Run
 
 ```
 mvn clean package -Dmaven.test.skip=true
 java -jar blog-0.0.1-SNAPSHOT.jar --server.port=80
 ```
-Then you can check your blog on 80 port.
 
 ## Built With
 
