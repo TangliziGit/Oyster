@@ -1,8 +1,8 @@
 # Oyster  
 
-This is a simple blog for oysters with Spring Boot, Spring Data JPA, Thymeleaf and Flexmark.
+This is a simple blog for oysters, based on spring-boot, spring-mvc, spring-data-jpa and thymeleaf.
 
-这是一个简单个人博客，采用多模块构建，主要技术栈为spring-boot, spring-data-jpa, thymeleaf和flexmark.
+这是一个简单个人博客，采用多模块构建，主要技术栈为spring-boot, spring-mvc, spring-data-jpa和thymeleaf
 
 ## Getting Started
 
