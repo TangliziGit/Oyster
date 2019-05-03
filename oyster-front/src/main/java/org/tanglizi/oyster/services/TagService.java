@@ -1,7 +1,7 @@
 package org.tanglizi.oyster.services;
 
-import org.tanglizi.oyster.dto.TagInfo;
-import org.tanglizi.oyster.dto.entities.Tag;
+import org.tanglizi.oyster.model.TagInfo;
+import org.tanglizi.oyster.entities.Tag;
 
 import java.util.List;
 

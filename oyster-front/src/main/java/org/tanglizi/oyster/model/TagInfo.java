@@ -1,8 +1,8 @@
-package org.tanglizi.oyster.dto;
+package org.tanglizi.oyster.model;
 
 import java.util.List;
 
-public class CategoryInfo {
+public class TagInfo {
     private Integer id;
     private String name;
     private List<Integer> articlesId;

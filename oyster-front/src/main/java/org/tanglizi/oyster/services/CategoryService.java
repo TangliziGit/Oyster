@@ -1,7 +1,7 @@
 package org.tanglizi.oyster.services;
 
-import org.tanglizi.oyster.dto.entities.Category;
-import org.tanglizi.oyster.dto.CategoryInfo;
+import org.tanglizi.oyster.entities.Category;
+import org.tanglizi.oyster.model.CategoryInfo;
 
 import java.util.List;
 

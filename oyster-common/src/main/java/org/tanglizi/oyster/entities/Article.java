@@ -1,4 +1,4 @@
-package org.tanglizi.oyster.dto.entities;
+package org.tanglizi.oyster.entities;
 
 import javax.persistence.*;
 import java.util.Date;

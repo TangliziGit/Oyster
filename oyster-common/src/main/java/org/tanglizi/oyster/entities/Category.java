@@ -1,31 +1,31 @@
-package org.tanglizi.oyster.dto.entities;
+package org.tanglizi.oyster.entities;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tag")
-public class Tag {
+@Table(name = "category")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tagId;
+    private Integer categoryId;
 
     @Column
     private String name;
 
     @Override
     public String toString() {
-        return "Tag{" +
-                "tagId=" + tagId +
+        return "Category{" +
+                "categoryId=" + categoryId +
                 ", name='" + name + '\'' +
                 '}';
     }
 
-    public Integer getTagId() {
-        return tagId;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setTagId(Integer tagId) {
-        this.tagId = tagId;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getName() {

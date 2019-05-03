@@ -1,7 +1,7 @@
 package org.tanglizi.oyster.services;
 
 import org.springframework.data.domain.Page;
-import org.tanglizi.oyster.dto.entities.Article;
+import org.tanglizi.oyster.entities.Article;
 
 import java.util.List;
 

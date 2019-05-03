@@ -1,10 +1,10 @@
 package org.tanglizi.oyster.dao.queries;
 
-import org.tanglizi.oyster.dao.ExampleQuery;
+import org.tanglizi.oyster.dao.AbstractQuery;
 
 import java.util.List;
 
-public class ArticleQueries extends ExampleQuery {
+public class ArticleQuery extends AbstractQuery {
     @QueryWord(column = "title", type = MatchType.LIKE)
     private List<String> titleLikeList;
 
@@ -27,3 +27,4 @@ public class ArticleQueries extends ExampleQuery {
         this.contentLikeList = contentLikeList;
     }
 }
+

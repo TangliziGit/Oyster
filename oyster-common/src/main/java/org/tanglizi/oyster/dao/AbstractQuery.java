@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.tanglizi.oyster.dao.ExampleQuery.LogicType.AND;
-import static org.tanglizi.oyster.dao.ExampleQuery.LogicType.OR;
+import static org.tanglizi.oyster.dao.AbstractQuery.LogicType.AND;
+import static org.tanglizi.oyster.dao.AbstractQuery.LogicType.OR;
 
-public abstract class ExampleQuery<T> {
-    private Logger logger= LoggerFactory.getLogger(ExampleQuery.class);
+public abstract class AbstractQuery<T> {
+    private Logger logger= LoggerFactory.getLogger(AbstractQuery.class);
     private List<LogicSpecificationPair> logicSpecificationPairs;
     private LogicType combineLogicType=AND;
 
@@ -75,7 +75,7 @@ public abstract class ExampleQuery<T> {
     }
 
     protected Specification<T> toSpecWithLogicType(LogicType type){
-        ExampleQuery outer=this;
+        AbstractQuery outer=this;
         return (root, query, cb) -> {
             Class clazz=outer.getClass();
             logger.debug("class :"+clazz.getName());
@@ -162,7 +162,7 @@ public abstract class ExampleQuery<T> {
         );
     }
 
-    public static <T> Specification<T> combineWithLogicType(ExampleQuery eqA, ExampleQuery eqB, LogicType type){
+    public static <T> Specification<T> combineWithLogicType(AbstractQuery eqA, AbstractQuery eqB, LogicType type){
         Specification specA=eqA.toSpec(), specB=eqB.toSpec();
         switch (type){
             case AND:
@@ -175,30 +175,30 @@ public abstract class ExampleQuery<T> {
         return null;
     }
 
-    public static <T> Specification<T> withNotLogic(ExampleQuery eq){
+    public static <T> Specification<T> withNotLogic(AbstractQuery eq){
         return Specification.not(eq.toSpec());
     }
 
-    public static <T> Specification<T> combineWithAndLogic(ExampleQuery eqA, ExampleQuery eqB){
+    public static <T> Specification<T> combineWithAndLogic(AbstractQuery eqA, AbstractQuery eqB){
         return eqA.toSpec().and(eqB.toSpec());
     }
 
-    public static <T> Specification<T> combineWithOrLogic(ExampleQuery eqA, ExampleQuery eqB){
+    public static <T> Specification<T> combineWithOrLogic(AbstractQuery eqA, AbstractQuery eqB){
         return eqA.toSpec().or(eqB.toSpec());
     }
 
-    public static <T> Specification<T> combineWithXorLogic(ExampleQuery eqA, ExampleQuery eqB){
+    public static <T> Specification<T> combineWithXorLogic(AbstractQuery eqA, AbstractQuery eqB){
         return combineWithXorLogic(eqA.toSpec(), eqB.toSpec());
     }
 
-    public ExampleQuery<T> and(ExampleQuery eq){
+    public AbstractQuery<T> and(AbstractQuery eq){
         if (logicSpecificationPairs==null)
             logicSpecificationPairs=new ArrayList<>();
         this.logicSpecificationPairs.add(new LogicSpecificationPair(AND, eq.toSpec()));
         return this;
     }
 
-    public ExampleQuery<T> or(ExampleQuery eq){
+    public AbstractQuery<T> or(AbstractQuery eq){
         if (logicSpecificationPairs==null)
             logicSpecificationPairs=new ArrayList<>();
         this.logicSpecificationPairs.add(new LogicSpecificationPair(OR, eq.toSpec()));

@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.tanglizi.oyster.dao.queries.ArticleQueries;
-import org.tanglizi.oyster.dto.entities.Article;
+import org.tanglizi.oyster.dao.queries.ArticleQuery;
+import org.tanglizi.oyster.entities.Article;
 import org.tanglizi.oyster.dao.repositories.ArticleRepository;
 import org.tanglizi.oyster.services.ArticleService;
 
@@ -46,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<Article> findArticlesByLikeList(List<String> titleLkeList, List<String> contentLikeList,
                                                 int pageNumber, int limit) {
-        return articleRepository.findAll(new ArticleQueries(){{
+        return articleRepository.findAll(new ArticleQuery(){{
             setCombineLogicType(LogicType.OR);
             setTitleLikeList(titleLkeList);
             setContentLikeList(contentLikeList);

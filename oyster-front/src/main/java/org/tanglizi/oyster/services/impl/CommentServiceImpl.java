@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.tanglizi.oyster.dao.repositories.CommentRepository;
-import org.tanglizi.oyster.dto.entities.Comment;
+import org.tanglizi.oyster.entities.Comment;
 import org.tanglizi.oyster.services.CommentService;
 
 import javax.annotation.Resource;

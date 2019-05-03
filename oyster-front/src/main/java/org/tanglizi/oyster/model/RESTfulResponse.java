@@ -1,4 +1,4 @@
-package org.tanglizi.oyster.dto;
+package org.tanglizi.oyster.model;
 
 public class RESTfulResponse<T> {
     private String message;

@@ -2,8 +2,8 @@ package org.tanglizi.oyster.services.impl;
 
 import org.springframework.stereotype.Service;
 import org.tanglizi.oyster.dao.repositories.CategoryRepository;
-import org.tanglizi.oyster.dto.entities.Category;
-import org.tanglizi.oyster.dto.CategoryInfo;
+import org.tanglizi.oyster.entities.Category;
+import org.tanglizi.oyster.model.CategoryInfo;
 import org.tanglizi.oyster.services.CategoryService;
 
 import javax.annotation.Resource;

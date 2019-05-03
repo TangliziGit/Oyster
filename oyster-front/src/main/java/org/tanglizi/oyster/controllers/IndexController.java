@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tanglizi.oyster.configurations.OysterFrontConfig;
-import org.tanglizi.oyster.dto.entities.Article;
+import org.tanglizi.oyster.entities.Article;
 import org.tanglizi.oyster.services.ArticleService;
 
 import java.util.Map;

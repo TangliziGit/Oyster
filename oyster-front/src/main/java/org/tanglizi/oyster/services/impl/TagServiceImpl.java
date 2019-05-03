@@ -2,8 +2,8 @@ package org.tanglizi.oyster.services.impl;
 
 import org.springframework.stereotype.Service;
 import org.tanglizi.oyster.dao.repositories.TagRepository;
-import org.tanglizi.oyster.dto.TagInfo;
-import org.tanglizi.oyster.dto.entities.Tag;
+import org.tanglizi.oyster.model.TagInfo;
+import org.tanglizi.oyster.entities.Tag;
 import org.tanglizi.oyster.services.TagService;
 
 import javax.annotation.Resource;
