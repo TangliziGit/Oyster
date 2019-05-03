@@ -41,7 +41,7 @@
     <div class="comment_editor">
         <hr />
 
-        <form id="comment_form" th:action="@{/comments}" method="post">
+        <form id="comment_form" th:action="@{/api/v1/comments}" method="post">
             <!-- 默认垂直布局，float: left水平布局（width: 50%控制大小） -->
             <input name="articleId" th:value="${article.articleId}" type="hidden" />
             <input name="userName" type="text"  placeholder="Your Name" style="float: left; width: 50%;"/>

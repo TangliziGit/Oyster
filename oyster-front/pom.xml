@@ -26,11 +26,6 @@
             <version>0.0.1-SNAPSHOT</version>
             <!-- scope>compile</scope -->
         </dependency>
-        <dependency>
-            <groupId>org.tanglizi</groupId>
-            <artifactId>oyster-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
