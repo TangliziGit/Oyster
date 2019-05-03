@@ -19,14 +19,9 @@ This is a simple blog for oysters with Spring Boot, Spring Data JPA, Thymeleaf a
 ```
 git clone https://github.com/TangliziGit/Oyster oyster
 cd oyster
-mvn clean
-mvn complie
-mvn package -Dmaven.test.skip=true
+mvn clean install
 java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
 ```
-
-注意直接package会存在编译失败，解决方法是先手动compile然后打包
-但运行却报错
 
 ## 技术栈
 
