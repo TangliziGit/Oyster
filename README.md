@@ -1,34 +1,23 @@
 # Oyster  
 
-This is a simple blog for oysters with Spring Boot, Spring Data JPA, Thymeleaf and Flexmark.
+This is a simple blog for oysters, based on spring-boot, spring-mvc, spring-data-jpa and thymeleaf.
 
-这是一个简单个人博客，采用多模块构建，主要技术栈为spring-boot, spring-data-jpa, thymeleaf和flexmark.
+这是一个简单个人博客，采用多模块构建，主要技术栈为spring-boot, spring-mvc, spring-data-jpa和thymeleaf
 
-## 开始
+## Getting Started
 
-### 环境
+### Prerequisites
 
-- jdk 1.8 (or later)
+jdk 1.8 or later
 
-### 部署
-
-开发中
-
-### 运行
+### Run
 
 ```
-git clone https://github.com/TangliziGit/Oyster oyster
-cd oyster
-mvn clean
-mvn complie
-mvn package -Dmaven.test.skip=true
-java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
+mvn clean package -Dmaven.test.skip=true
+java -jar blog-0.0.1-SNAPSHOT.jar --server.port=80
 ```
 
-注意直接package会存在编译失败，解决方法是先手动compile然后打包
-但运行却报错
-
-## 技术栈
+## Built With
 
 - Maven
 - Spring Boot
@@ -40,23 +29,16 @@ java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
 
 ## TODO List
 
-- 公共模块
-    - [x] ExampleQuery查询  
-        *通过注解封装一部分JPA动态查询功能，提供方便使用的多重查询*
-- 前台页面模块
-    - [x] 灵活的文章查找  
-        *支持文章标题和内容的多重模糊查询*
-    - [ ] 更多主题  
-        *可能尝试调用hexo解析hexo主题模板*
-- 后台管理模块
-    - [ ] markdown支持插入图片
-    - [ ] 实时编辑markdown  
-- RESTful API模块
-    - [ ] 复用api
-        *转发前后台url到api*
-    - [ ] RESTful API规范
-        *遵守状态码，安全与幂等等规范*
-    - [ ] 对提交评论和文章点击量的限制  
-        *包括提交内容判误、提交频率、一段时间同ip不增加点击量、跨域提交*
-- docker支持
+- front pages
+    - [x] search functions  
+        *provide multiple search functions on title and content for articles*
+    - [ ] more theme  
+        *maybe use hexo to generate theme htmls.*
+- background management
+    - [ ] markdown edit  
+        *real time*
+- RESTful API
+- docker supports
+
+
 
