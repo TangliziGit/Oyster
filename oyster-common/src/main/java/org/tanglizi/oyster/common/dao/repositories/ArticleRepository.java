@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.tanglizi.oyster.common.entities.Article;
 
-@Component
 public interface ArticleRepository extends JpaRepository<Article, Integer>, JpaSpecificationExecutor<Article> {
     @Query(value = "select min(article_id) from article where article_id > ?1 group by article_id", nativeQuery = true)
     Integer findNextArticleId(Integer articleId);

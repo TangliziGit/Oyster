@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.tanglizi.oyster.common.entities.Comment;
 
-@Component
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     Page<Comment> findCommentsByArticleId(Integer articleId, Pageable pageable);
 }

@@ -12,7 +12,7 @@ import org.tanglizi.oyster.common.dao.repositories.ArticleRepository;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+@Service("FrontArticleService")
 public class ArticleServiceImpl implements ArticleService {
     @Resource
     private ArticleRepository articleRepository;

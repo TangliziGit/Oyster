@@ -7,7 +7,6 @@ import org.tanglizi.oyster.common.entities.Tag;
 
 import java.util.List;
 
-@Component
 public interface TagRepository extends JpaRepository<Tag, Integer> {
     @Query(value = "select article_id from tag_relation where tag_id=?1", nativeQuery = true)
     List<Integer> findArticleIdsByTagId(Integer tagId);

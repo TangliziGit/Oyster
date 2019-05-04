@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
-@Service
+@Service("ApiCommentService")
 public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentRepository commentRepository;

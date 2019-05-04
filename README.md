@@ -2,19 +2,19 @@
 
 This is a simple blog for oysters, built with Spring Boot, Spring Data JPA, Thymeleaf and Flexmark.
 
-这是一个简单个人博客，采用多模块构建，主要技术栈为spring-boot, spring-data-jpa, thymeleaf.
+这是一个简单个人博客，采用多模块构建，主要运用spring-boot, spring-data-jpa, thymeleaf.
 
-## 开始
+## 如何使用
 
-### 环境
+### 环境需求
 
 - jdk 1.8 (or later)
 
-### 部署
+### 部署方法
 
 直接运行jar，正经部署还没怎么考虑
 
-### 运行
+### 运行方法
 
 ```
 git clone https://github.com/TangliziGit/Oyster oyster
@@ -23,7 +23,13 @@ mvn clean install
 java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
 ```
 
-## 技术栈
+## 开发细节
+
+### 架构
+
+待补
+
+### 使用的框架
 
 - Maven
 - Spring Boot

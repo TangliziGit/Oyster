@@ -10,7 +10,7 @@ import org.tanglizi.oyster.common.model.CategoryModel;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+@Service("ApiCategoryService")
 public class CategoryServiceImpl implements CategoryService {
     @Resource
     private CategoryRepository categoryRepository;

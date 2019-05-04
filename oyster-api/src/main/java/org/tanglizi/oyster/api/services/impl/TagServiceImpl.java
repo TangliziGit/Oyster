@@ -10,7 +10,7 @@ import org.tanglizi.oyster.common.entities.Tag;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+@Service("ApiTagService")
 public class TagServiceImpl implements TagService {
     @Resource
     private TagRepository tagRepository;

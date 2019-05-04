@@ -7,7 +7,6 @@ import org.tanglizi.oyster.common.entities.Category;
 
 import java.util.List;
 
-@Component
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Query(value = "select article_id from category_relation where category_id=?1", nativeQuery = true)
     List<Integer> findArticleIdsByCategoryId(Integer categoryId);

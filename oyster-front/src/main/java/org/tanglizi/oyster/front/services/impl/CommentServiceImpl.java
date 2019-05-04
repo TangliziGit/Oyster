@@ -12,7 +12,7 @@ import org.tanglizi.oyster.front.services.CommentService;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+@Service("FrontCommentService")
 public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentRepository commentRepository;
