@@ -42,7 +42,7 @@ java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
 ## TODO List
 
 - 公共模块
-    - [x] ExampleQuery查询  
+    - [x] AbstractQuery查询  
         *通过注解封装一部分JPA动态查询功能，提供方便使用的多重查询*
 - 前台页面模块
     - [x] 灵活的文章查找  
@@ -53,9 +53,7 @@ java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
     - [ ] markdown支持插入图片
     - [ ] 实时编辑markdown  
 - RESTful API模块
-    - [ ] 复用api
-        *转发前后台url到api*
-    - [ ] RESTful API规范
+    - [x] RESTful API规范
         *遵守状态码，安全与幂等等规范*
     - [ ] 对提交评论和文章点击量的限制  
         *包括提交内容判误、提交频率、一段时间同ip不增加点击量、跨域提交*

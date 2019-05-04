@@ -16,21 +16,15 @@ public class TagServiceImpl implements TagService {
     private TagRepository tagRepository;
 
     @Override
-    public RESTfulResponse<List<Tag>> getAllTagsResponse() {
-        List<Tag> tags=tagRepository.findAll();
-        if (tags==null || tags.size()==0)
-            return RESTfulResponse.fail("no category exists");
-
-        RESTfulResponse<List<Tag>> response=RESTfulResponse.ok();
-        response.setPayload(tags);
-        return response;
+    public List<Tag> getAllTags() {
+        return tagRepository.findAll();
     }
 
     @Override
-    public RESTfulResponse<TagModel> getTagModelResponse(Integer tagId) {
+    public TagModel getTagModel(Integer tagId) {
         Tag tag=tagRepository.findById(tagId).orElse(null);
         if (tag==null)
-            return RESTfulResponse.fail("could not find the tag");
+            return null;
 
         TagModel tagModel=new TagModel(){{
             setId(tagId);
@@ -38,10 +32,7 @@ public class TagServiceImpl implements TagService {
             setArticlesId(tagRepository.findArticleIdsByTagId(tagId));
         }};
 
-        RESTfulResponse<TagModel> response=RESTfulResponse.ok();
-        response.setPayload(tagModel);
-
-        return response;
+        return tagModel;
     }
 
 }

@@ -3,7 +3,7 @@ package org.tanglizi.oyster.api.model;
 public class RESTfulResponse<T> {
     private String message;
     private boolean success;
-    private T payload;
+    private T data;
     private long timestamp;
 
     public static RESTfulResponse ok(){
@@ -49,12 +49,12 @@ public class RESTfulResponse<T> {
         this.success = success;
     }
 
-    public T getPayload() {
-        return payload;
+    public T getData() {
+        return data;
     }
 
-    public void setPayload(T payload) {
-        this.payload = payload;
+    public void setData(T data) {
+        this.data = data;
     }
 
     public long getTimestamp() {

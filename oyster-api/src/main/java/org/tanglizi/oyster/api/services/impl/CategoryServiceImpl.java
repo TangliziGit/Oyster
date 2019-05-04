@@ -16,21 +16,15 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public RESTfulResponse<List<Category>> getAllCategoriesResponse() {
-        List<Category> categories=categoryRepository.findAll();
-        if (categories==null || categories.size()==0)
-            return RESTfulResponse.fail("no category exists");
-
-        RESTfulResponse<List<Category>> response=RESTfulResponse.ok();
-        response.setPayload(categories);
-        return response;
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 
     @Override
-    public RESTfulResponse<CategoryModel> getCategoryModelResponse(Integer categoryId) {
+    public CategoryModel getCategoryModel(Integer categoryId) {
         Category category=categoryRepository.findById(categoryId).orElse(null);
         if (category==null)
-            return RESTfulResponse.fail("could not find the category");
+            return null;
 
         CategoryModel categoryModel = new CategoryModel(){{
             setId(categoryId);
@@ -38,8 +32,6 @@ public class CategoryServiceImpl implements CategoryService {
             setArticlesId(categoryRepository.findArticleIdsByCategoryId(categoryId));
         }};
 
-        RESTfulResponse<CategoryModel> response=RESTfulResponse.ok();
-        response.setPayload(categoryModel);
-        return response;
+        return categoryModel;
     }
 }

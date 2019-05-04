@@ -19,24 +19,20 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
 
     @Override
-    public RESTfulResponse<List<Comment>> getCommentsByArticleId(Integer articleId, int pageNumber, int limit) {
-        List<Comment> comments = commentRepository.findCommentsByArticleId(articleId,
+    public List<Comment> getCommentsByArticleId(Integer articleId, int pageNumber, int limit) {
+        return commentRepository.findCommentsByArticleId(articleId,
                 PageRequest.of(pageNumber, limit, Sort.by("createTimestamp"))).getContent();
-
-        RESTfulResponse<List<Comment>> response=RESTfulResponse.ok();
-        response.setPayload(comments);
-        return response;
     }
 
     @Override
-    public RESTfulResponse insertComment(Comment comment){
+    public String insertComment(Comment comment){
         comment.setCreateTimestamp(new Date());
         /*
-         * TODO: 各种判断
+         * TODO: 各种判断返回错误原因
          * */
 
         commentRepository.save(comment);
-        return RESTfulResponse.ok();
+        return null;
     }
 
 }
