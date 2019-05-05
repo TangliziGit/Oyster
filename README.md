@@ -1,8 +1,8 @@
 # Oyster  
 
-This is a simple blog for oysters, built with Spring Boot, Spring Data JPA, Thymeleaf and Flexmark.
+This is a simple blog for oysters, built with Spring Boot, Spring Data JPA and Thymeleaf.
 
-这是一个简单个人博客，采用多模块构建，主要运用spring-boot, spring-data-jpa, thymeleaf.
+这是一个简单个人博客，采用多模块构建，主要运用spring-boot, spring-data-jpa and thymeleaf.
 
 ## 如何使用
 
@@ -36,8 +36,6 @@ java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
 - Spring MVC
 - Spring Data JPA
 - Thymeleaf
-- Flexmark  
-    a markdown parser
 
 ## TODO List
 
