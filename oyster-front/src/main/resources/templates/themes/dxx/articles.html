@@ -44,6 +44,7 @@
         <form id="comment_form" th:action="@{/api/v1/comments}" method="post">
             <!-- 默认垂直布局，float: left水平布局（width: 50%控制大小） -->
             <input name="articleId" th:value="${article.articleId}" type="hidden" />
+            <input name="_crsf_token" th:value="${_crsf_token}" type="hidden" />
             <input name="userName" type="text"  placeholder="Your Name" style="float: left; width: 50%;"/>
             <input name="userEmail" type="email" placeholder="Your Email" style="float: left; width: 50%"/> <br />
             <textarea name="content" type="text" style="resize: none; width: 100%; height:100px"></textarea> <br />
