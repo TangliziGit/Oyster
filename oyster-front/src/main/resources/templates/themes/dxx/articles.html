@@ -76,15 +76,18 @@
     $("#commentSubmit").on("click", function(){
         var form=new FormData(document.getElementById("comment_form"));
         $.post({
-            url: "/comments",
+            url: "/api/v1/comments",
             data: form,
             processData: false,
             contentType: false,
             success: function(data){
                 window.location.reload();
             },
-            error: function(data){
-                alert(data.message);
+            error: function(XMLHttpRequest, textStatus){
+                var response=XMLHttpRequest.responseJSON;
+                console.log(textStatus);
+                console.log(response);
+                alert(response.message);
             }
         })}
     );

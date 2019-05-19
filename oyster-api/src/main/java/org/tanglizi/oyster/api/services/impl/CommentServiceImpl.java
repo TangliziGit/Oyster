@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
 
         // 作为数据库的默认值，id为自增主键，timestamp为默认当前时间
         comment.setCommentId(null);
-        comment.setCreateTimestamp(null);
+        comment.setCreateTimestamp(new Date());
 
         commentRepository.save(comment);
         return null;

@@ -1,22 +1,20 @@
-package org.tanglizi.oyster.api.utils;
+package org.tanglizi.oyster.common.utils;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class GlobalApiCache {
+public class GlobalCacheKit {
     private final long CACHE_SIZE=1024;
-
-    // expiration for sec
     private final long DEFUALTE_EXPIRATION=3600;
 
-    private static GlobalApiCache singleton=new GlobalApiCache();
+    private static GlobalCacheKit singleton=new GlobalCacheKit();
 
     private TreeMap<String, CacheObject> cache=new TreeMap<>();
 
-    private GlobalApiCache(){}
+    private GlobalCacheKit(){}
 
-    public static GlobalApiCache getSingleton(){
+    public static GlobalCacheKit getCacheSingleton(){
         return singleton;
     }
 
@@ -25,7 +23,7 @@ public class GlobalApiCache {
 
         CacheObject cacheObject=cache.get(key);
         if (cacheObject != null){
-            if (cacheObject.getExpiration()<=0 || cacheObject.getExpiration()>now){
+            if (cacheObject.getExpiration()>0 && cacheObject.getExpiration()>now){
                 cache.remove(key);
             }
 

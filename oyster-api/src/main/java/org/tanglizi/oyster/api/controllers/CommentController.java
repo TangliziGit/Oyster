@@ -1,12 +1,14 @@
 package org.tanglizi.oyster.api.controllers;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
-import org.tanglizi.oyster.api.utils.GlobalApiCache;
+import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 import org.tanglizi.oyster.common.entities.Comment;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.CommentService;
@@ -21,6 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/v1/comments")
 public class CommentController {
+    private Logger logger= LoggerFactory.getLogger(CommentController.class);
 
     @Resource(name = "ApiCommentService")
     private CommentService commentService;
@@ -46,41 +49,49 @@ public class CommentController {
     @ResponseBody
     public ResponseEntity<RESTfulResponse> makeComment(
             Comment comment, HttpServletRequest request,
-            @RequestParam("_crsf") String crsf_token){
+            @RequestParam("_crsf_token") String crsfToken){
+        logger.info(comment.toString());
+        logger.info("crsfToken: "+crsfToken);
         String referer=request.getHeader("Referer");
         RESTfulResponse response=null;
-        GlobalApiCache globalCache= GlobalApiCache.getSingleton();
+        GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
 
         // 这里应该匹配一下HOST
-        if (StringUtils.isBlank(referer))
-            response=RESTfulResponse.fail();
+        if (null == response && StringUtils.isBlank(referer)) {
+            response = RESTfulResponse.fail();
+            logger.info("Blocked by referer.");
+        }
 
-        if (null != globalCache.get(crsf_token))
-            response=RESTfulResponse.fail();
+        if (null == response && null == globalCache.get(crsfToken)) {
+            response = RESTfulResponse.fail();
+            logger.info("Blocked by crsf_token.");
+        }
 
         String ipWithAritleId = IPKit.getIPAddress(request)+":"+comment.getArticleId();
         Object lastPostTime = globalCache.get(ipWithAritleId);
-        if (null != lastPostTime) {
+        if (null == response && null != lastPostTime) {
             Long interval = System.currentTimeMillis() / 1000 - (Long) lastPostTime / 1000;
             if (interval < OysterApiConfig.COMMENT_POST_INTERVAL)
                 response = RESTfulResponse.fail("You comment this article too frequently.");
         }
 
-        if (StringUtils.isBlank(comment.getContent()))
+        if (null == response && StringUtils.isBlank(comment.getContent()))
             response=RESTfulResponse.fail("The comment can not be empty.");
 
-        if (comment.getContent().length() > OysterApiConfig.COMMENT_SIZE)
+        if (null == response && comment.getContent().length() > OysterApiConfig.COMMENT_SIZE)
             response=RESTfulResponse.fail("The comment can not be too large.");
 
-        if (!StringKit.isEmail(comment.getUserEmail()))
+        if (null == response && !StringKit.isEmail(comment.getUserEmail()))
             response=RESTfulResponse.fail("Please enter a correct email.");
 
         SecurityKit.cleanXSS(comment.getContent());
         SecurityKit.cleanXSS(comment.getUserName());
         SecurityKit.cleanXSS(comment.getUserEmail());
 
-        if (null != response)
+        if (null != response) {
+            logger.info("Error response: "+response.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
 
         String failMessage=commentService.insertComment(comment);
 

@@ -2,11 +2,11 @@ package org.tanglizi.oyster.front.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.entities.Article;
+import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 import org.tanglizi.oyster.common.utils.SecurityKit;
 import org.tanglizi.oyster.front.configurations.FlexmarkConfig;
 import org.tanglizi.oyster.front.configurations.OysterFrontConfig;
@@ -49,13 +49,12 @@ public class ArticleController {
         map.put("markdownContent", FlexmarkConfig.FlexmarkParser.parse(article.getContent()));
         map.put("nextArticleId", nextArticleId);
         map.put("prevArticleId", prevArticleId);
-        map.put("comments",
-                commentService.findCommentsBtArticleId(articleId, pageNumber, limit)
-        );
-        map.put("tags",
-                tagService.findTagsByArticleId(articleId)
-        );
-        map.put("_crsf_token", SecurityKit.getCrsfToken());
+        map.put("comments", commentService.findCommentsBtArticleId(articleId, pageNumber, limit));
+        map.put("tags", tagService.findTagsByArticleId(articleId));
+
+        String crsfToken=SecurityKit.getCrsfToken();
+        GlobalCacheKit.getCacheSingleton().set(crsfToken, OysterCommonConfig.CRSF_TOKEN);
+        map.put("_crsf_token", crsfToken);
 
         return OysterFrontConfig.themePath +"articles";
     }

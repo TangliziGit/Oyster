@@ -20,6 +20,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findCommentsBtArticleId(Integer articleId, int pageNum, int limit) {
         return commentRepository.findCommentsByArticleId(articleId,
-                PageRequest.of(pageNum, limit, Sort.by("createTimestamp"))).getContent();
+                PageRequest.of(pageNum, limit, Sort.by(Sort.Direction.DESC, "createTimestamp"))).getContent();
     }
 }
