@@ -5,8 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scripting.support.RefreshableScriptTargetSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.CategoryService;
@@ -17,12 +16,14 @@ import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/admin/categories")
+@RequestMapping("/api/v1/admin/categories")
 public class AdminCategoryController {
 
     @Resource(name = "ApiCategoryService")
     private CategoryService categoryService;
 
+    @PostMapping
+    @ResponseBody
     public ResponseEntity<RESTfulResponse> addCategory(Category category,
                                                        @RequestParam("_csrf_token") String csrfToken){
         GlobalCacheKit globalCache=GlobalCacheKit.getCacheSingleton();
@@ -46,6 +47,8 @@ public class AdminCategoryController {
         return ResponseEntity.ok(RESTfulResponse.ok("save new category successfully"));
     }
 
+    @DeleteMapping
+    @ResponseBody
     public ResponseEntity<RESTfulResponse> deleteCategory(@RequestParam("categoryId") Integer categoryId,
                                                           @RequestParam("_csrf_token") String csrfToken){
         GlobalCacheKit globalCache = GlobalCacheKit.getCacheSingleton();

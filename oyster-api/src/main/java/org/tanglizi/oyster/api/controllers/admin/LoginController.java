@@ -15,7 +15,7 @@ import org.tanglizi.oyster.common.utils.SecurityKit;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/admin/login")
+@RequestMapping("/api/v1/admin/login")
 public class LoginController {
 
     @PostMapping

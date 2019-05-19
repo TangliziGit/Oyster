@@ -8,7 +8,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new PermisionInterceptor())
-                .addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login");
+                .addPathPatterns("/api/v1/admin/**")
+                .excludePathPatterns("/api/v1/admin/login");
     }
 }

@@ -24,7 +24,7 @@ public class PermisionInterceptor implements HandlerInterceptor {
         logger.info("Request URI: "+uri);
         logger.info("Client IP  : "+ip);
 
-        if (uri.startsWith(path+"/admin") && !uri.startsWith(path+"/admin/login")){
+        if (uri.startsWith(path+"/api/v1/admin") && !uri.startsWith(path+"/api/v1/admin/login")){
             HttpSession session = request.getSession();
             GlobalCacheKit globalCache=GlobalCacheKit.getCacheSingleton();
             Object userToken=session.getAttribute(OysterCommonConfig.USER_TOKEN);
@@ -35,7 +35,7 @@ public class PermisionInterceptor implements HandlerInterceptor {
             if (null == userToken || (null == cachedUserToken || !cachedUserToken.equals(userToken))) {
                 // 注意重定向(Redirect)与转发(Forward)的区别
                 logger.info("Forward to login");
-                response.sendRedirect(path+"/admin/login");
+                response.sendRedirect(path+"/api/v1/admin/login");
                 return false;
             }
         }

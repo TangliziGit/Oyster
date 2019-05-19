@@ -4,8 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.TagService;
@@ -16,12 +15,14 @@ import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/admin/tags")
+@RequestMapping("/api/v1/admin/tags")
 public class AdminTagController {
 
     @Resource(name = "ApiTagService")
     private TagService tagService;
 
+    @PostMapping
+    @ResponseBody
     public ResponseEntity<RESTfulResponse> addTag(Tag tag,
                                                   @RequestParam("_csrf_token") String csrfToken){
         GlobalCacheKit globalCache=GlobalCacheKit.getCacheSingleton();
@@ -45,6 +46,8 @@ public class AdminTagController {
         return ResponseEntity.ok(RESTfulResponse.ok("save new tag successfully"));
     }
 
+    @DeleteMapping
+    @ResponseBody
     public ResponseEntity<RESTfulResponse> deleteTag(@RequestParam("tagId") Integer tagId,
                                                      @RequestParam("_csrf_token") String csrfToken){
         GlobalCacheKit globalCache = GlobalCacheKit.getCacheSingleton();
