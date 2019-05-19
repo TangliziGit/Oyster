@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
+import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 import org.tanglizi.oyster.common.entities.Comment;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
@@ -49,9 +50,9 @@ public class CommentController {
     @ResponseBody
     public ResponseEntity<RESTfulResponse> makeComment(
             Comment comment, HttpServletRequest request,
-            @RequestParam("_crsf_token") String crsfToken){
+            @RequestParam("_csrf_token") String csrfToken){
         logger.info(comment.toString());
-        logger.info("crsfToken: "+crsfToken);
+        logger.info("csrfToken: "+csrfToken);
         String referer=request.getHeader("Referer");
         RESTfulResponse response=null;
         GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
@@ -62,9 +63,9 @@ public class CommentController {
             logger.info("Blocked by referer.");
         }
 
-        if (null == response && null == globalCache.get(crsfToken)) {
+        if (null == response && OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken))) {
             response = RESTfulResponse.fail();
-            logger.info("Blocked by crsf_token.");
+            logger.info("Blocked by csrf_token.");
         }
 
         String ipWithAritleId = IPKit.getIPAddress(request)+":"+comment.getArticleId();
@@ -78,7 +79,7 @@ public class CommentController {
         if (null == response && StringUtils.isBlank(comment.getContent()))
             response=RESTfulResponse.fail("The comment can not be empty.");
 
-        if (null == response && comment.getContent().length() > OysterApiConfig.COMMENT_SIZE)
+        if (null == response && comment.getContent().length() > OysterApiConfig.COMMENT_LENGTH)
             response=RESTfulResponse.fail("The comment can not be too large.");
 
         if (null == response && !StringKit.isEmail(comment.getUserEmail()))

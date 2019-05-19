@@ -8,4 +8,6 @@ import java.util.List;
 public interface TagService {
     List<Tag> getAllTags();
     TagModel getTagModel(Integer categoryId);
+    void saveTag(Tag tag);
+    void deleteTag(Integer tagId);
 }
