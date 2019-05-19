@@ -52,9 +52,9 @@ public class ArticleController {
         map.put("comments", commentService.findCommentsBtArticleId(articleId, pageNumber, limit));
         map.put("tags", tagService.findTagsByArticleId(articleId));
 
-        String crsfToken=SecurityKit.getCrsfToken();
-        GlobalCacheKit.getCacheSingleton().set(crsfToken, OysterCommonConfig.CRSF_TOKEN);
-        map.put("_crsf_token", crsfToken);
+        String csrfToken=SecurityKit.getCsrfToken();
+        GlobalCacheKit.getCacheSingleton().set(csrfToken, OysterCommonConfig.CRSF_TOKEN);
+        map.put("_csrf_token", csrfToken);
 
         return OysterFrontConfig.themePath +"articles";
     }

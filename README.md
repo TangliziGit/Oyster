@@ -53,7 +53,7 @@ java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
 - RESTful API模块
     - [x] RESTful API规范
         *遵守状态码，安全与幂等等规范*
-    - [ ] 对提交评论和文章点击量的限制  
+    - [x] 对提交评论和文章点击量的限制  
         *包括提交内容判误、提交频率、一段时间同ip不增加点击量、跨域提交*
 - docker支持
 

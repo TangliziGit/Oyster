@@ -5,7 +5,10 @@ import org.tanglizi.oyster.common.model.CategoryModel;
 
 import java.util.List;
 
+
 public interface CategoryService {
     List<Category> getAllCategories();
     CategoryModel getCategoryModel(Integer categoryId);
+    void saveCategory(Category category);
+    void deleteCategory(Integer categoryId);
 }

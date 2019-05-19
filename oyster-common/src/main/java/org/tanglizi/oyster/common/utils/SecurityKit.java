@@ -1,6 +1,5 @@
 package org.tanglizi.oyster.common.utils;
 
-import net.bytebuddy.utility.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.util.HtmlUtils;
 import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
@@ -10,7 +9,11 @@ public class SecurityKit {
         HtmlUtils.htmlEscape(string);
     }
 
-    public static String getCrsfToken(){
-        return RandomStringUtils.randomAlphanumeric(OysterCommonConfig.RANDOM_CRSF_TOKEN_LENGTH);
+    public static String getCsrfToken(){
+        return RandomStringUtils.randomAlphanumeric(OysterCommonConfig.RANDOM_CSRF_TOKEN_LENGTH);
+    }
+
+    public static String getUserToken(){
+        return RandomStringUtils.randomAlphanumeric(OysterCommonConfig.RANDOM_USER_TOKEN_LENGTH);
     }
 }
