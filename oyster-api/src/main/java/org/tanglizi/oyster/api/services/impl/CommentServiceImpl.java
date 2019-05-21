@@ -24,11 +24,40 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> getCommentsByArticleId(Integer articleId, int pageNumber, int limit) {
         return commentRepository.findCommentsByArticleId(articleId,
-                PageRequest.of(pageNumber, limit, Sort.by("createTimestamp"))).getContent();
+                PageRequest.of(pageNumber, limit, Sort.by(Sort.Direction.DESC, "createTimestamp"))
+        ).getContent();
     }
 
     @Override
-    public String insertComment(Comment comment){
+    public Comment getCommentById(Integer commentId) {
+        return commentRepository.findById(commentId).orElse(null);
+    }
+
+    @Override
+    public void deleteCommentById(Integer commentId) {
+        commentRepository.deleteById(commentId);
+    }
+
+    @Override
+    public Comment getCommentByArticleIdAndNumber(Integer articleId, Integer number) {
+        List<Comment> comments = commentRepository.findCommentsByArticleId(articleId,
+                PageRequest.of(number, 1, Sort.by(Sort.Direction.DESC, "createTimestamp"))
+        ).getContent();
+
+        if (comments.size() == 0)
+            return null;
+        return comments.get(0);
+    }
+
+    @Override
+    public List<Comment> getAllComments(int pageNumber, int limit) {
+        return commentRepository.findAll(
+                PageRequest.of(pageNumber, limit, Sort.by(Sort.Direction.DESC, "createTimestamp"))
+        ).getContent();
+    }
+
+    @Override
+    public String saveCommentReturnErrorMessage(Comment comment){
         comment.setCreateTimestamp(new Date());
 
         if (null == comment.getArticleId() || null == articleRepository.findById(comment.getArticleId()))
