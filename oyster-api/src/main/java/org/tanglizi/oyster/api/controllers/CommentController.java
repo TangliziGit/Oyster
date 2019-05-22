@@ -97,6 +97,10 @@ public class CommentController {
             logger.info("Blocked by csrf_token.");
         }
 
+        if (null != response)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(response);
+
         commentService.deleteCommentById(commentId);
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
@@ -180,7 +184,7 @@ public class CommentController {
 
         if (null != response) {
             logger.info("Error response: "+response.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
 
         comment.setArticleId(articleId);

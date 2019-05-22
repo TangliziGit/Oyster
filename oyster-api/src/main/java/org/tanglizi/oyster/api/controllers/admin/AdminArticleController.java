@@ -1,6 +1,7 @@
 package org.tanglizi.oyster.api.controllers.admin;
 
 import org.apache.catalina.WebResourceRoot;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -10,18 +11,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.ArticleService;
+import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.dao.repositories.ArticleRepository;
 import org.tanglizi.oyster.common.entities.Article;
+import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /*
  * TODO:
- *  articles        get
- *  articles/1      get
- *  articles/1      delete
+ *  articles        get     done
+ *  articles/1      get     done
+ *  articles/1      delete  done
  *  articles/1      update
  *  articles/1      post
  *
@@ -70,6 +74,37 @@ public class AdminArticleController {
         response.setData(article);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{articleId}")
+    @ResponseBody
+    public ResponseEntity<RESTfulResponse> deleteArticle(
+            @PathVariable("/{articleId}") Integer articleId,
+            HttpServletRequest request,
+            @RequestParam("_csrf_token") String csrfToken){
+
+        logger.info("csrfToken: "+csrfToken);
+        String referer=request.getHeader("Referer");
+        RESTfulResponse response=null;
+        GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
+
+        // 这里应该匹配一下HOST
+        if (null == response && StringUtils.isBlank(referer)) {
+            response = RESTfulResponse.fail();
+            logger.info("Blocked by referer.");
+        }
+
+        if (null == response && OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken))) {
+            response = RESTfulResponse.fail();
+            logger.info("Blocked by csrf_token.");
+        }
+
+        if (null != response)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(response);
+
+        articleService.deleteArticle(articleId);
+        return ResponseEntity.ok(RESTfulResponse.ok());
     }
 
 }
