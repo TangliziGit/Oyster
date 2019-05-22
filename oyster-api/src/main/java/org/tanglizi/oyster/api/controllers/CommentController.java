@@ -21,6 +21,7 @@ import org.tanglizi.oyster.common.utils.StringKit;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Security;
 import java.util.List;
 
 /*
@@ -82,20 +83,11 @@ public class CommentController {
             @RequestParam("_csrf_token") String csrfToken){
 
         logger.info("csrfToken: "+csrfToken);
-        String referer=request.getHeader("Referer");
         RESTfulResponse response=null;
-        GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
+        SecurityKit.SecurityBlockType securityBlockType=SecurityKit.securityBlock(request, csrfToken);
 
-        // 这里应该匹配一下HOST
-        if (null == response && StringUtils.isBlank(referer)) {
-            response = RESTfulResponse.fail();
-            logger.info("Blocked by referer.");
-        }
-
-        if (null == response && OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken))) {
-            response = RESTfulResponse.fail();
-            logger.info("Blocked by csrf_token.");
-        }
+        if (null != securityBlockType)
+            response=RESTfulResponse.fail();
 
         if (null != response)
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -146,20 +138,12 @@ public class CommentController {
                 @RequestParam("_csrf_token") String csrfToken){
         logger.info(comment.toString());
         logger.info("csrfToken: "+csrfToken);
-        String referer=request.getHeader("Referer");
         RESTfulResponse response=null;
-        GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
+        GlobalCacheKit globalCache=GlobalCacheKit.getCacheSingleton();
+        SecurityKit.SecurityBlockType securityBlockType=SecurityKit.securityBlock(request, csrfToken);
 
-        // 这里应该匹配一下HOST
-        if (null == response && StringUtils.isBlank(referer)) {
-            response = RESTfulResponse.fail();
-            logger.info("Blocked by referer.");
-        }
-
-        if (null == response && OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken))) {
-            response = RESTfulResponse.fail();
-            logger.info("Blocked by csrf_token.");
-        }
+        if (null != securityBlockType)
+            response=RESTfulResponse.fail();
 
         String ipWithAritleId = IPKit.getIPAddress(request)+":"+comment.getArticleId();
         Object lastPostTime = globalCache.get(ipWithAritleId);

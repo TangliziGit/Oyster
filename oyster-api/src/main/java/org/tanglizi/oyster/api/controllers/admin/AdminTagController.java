@@ -11,6 +11,7 @@ import org.tanglizi.oyster.api.services.TagService;
 import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.entities.Tag;
 import org.tanglizi.oyster.common.utils.GlobalCacheKit;
+import org.tanglizi.oyster.common.utils.SecurityKit;
 
 import javax.annotation.Resource;
 
@@ -25,10 +26,9 @@ public class AdminTagController {
     @ResponseBody
     public ResponseEntity<RESTfulResponse> addTag(Tag tag,
                                                   @RequestParam("_csrf_token") String csrfToken){
-        GlobalCacheKit globalCache=GlobalCacheKit.getCacheSingleton();
         RESTfulResponse response=null;
 
-        if (null == csrfToken || !OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken)))
+        if (SecurityKit.isCsrfBlocked(csrfToken))
             response = RESTfulResponse.fail();
 
         if (StringUtils.isBlank(tag.getName()))
@@ -50,9 +50,8 @@ public class AdminTagController {
     @ResponseBody
     public ResponseEntity<RESTfulResponse> deleteTag(@RequestParam("tagId") Integer tagId,
                                                      @RequestParam("_csrf_token") String csrfToken){
-        GlobalCacheKit globalCache = GlobalCacheKit.getCacheSingleton();
 
-        if (null == csrfToken || !OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken)))
+        if (SecurityKit.isCsrfBlocked(csrfToken))
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(RESTfulResponse.fail());
 

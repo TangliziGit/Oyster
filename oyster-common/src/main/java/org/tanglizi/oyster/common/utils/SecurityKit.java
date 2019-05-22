@@ -21,22 +21,34 @@ public class SecurityKit {
     }
 
     public static SecurityBlockType securityBlock(HttpServletRequest request, String csrfToken){
-        String referer=request.getHeader("Referer");
-        GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
-
-        // 这里应该匹配一下HOST
-        // Blocked by referer
-        if (StringUtils.isBlank(referer))
+        if (SecurityKit.isRefererBlocked(request))
             return SecurityBlockType.REFERER;
 
-        // Blocked by csrf_token
-        if (OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken)))
+        if (SecurityKit.isCsrfBlocked(csrfToken))
             return SecurityBlockType.CSRF;
 
         return null;
     }
 
-    enum SecurityBlockType{
+    public static boolean isRefererBlocked(HttpServletRequest request){
+        String referer=request.getHeader("Referer");
+
+        // 这里应该匹配一下HOST
+        // Blocked by referer
+        if (StringUtils.isBlank(referer))
+            return true;
+        return false;
+    }
+
+    public static boolean isCsrfBlocked(String csrfToken){
+        GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
+        // Blocked by csrf_token
+        if (null == csrfToken || OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken)))
+            return true;
+        return false;
+    }
+
+    public enum SecurityBlockType{
         REFERER,
         CSRF
     }
