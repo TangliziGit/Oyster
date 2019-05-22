@@ -79,7 +79,7 @@ public class CommentController {
     public ResponseEntity<RESTfulResponse> deleteComment(
             HttpServletRequest request,
             @PathVariable("commentId") Integer commentId,
-        @RequestParam("_csrf_token") String csrfToken){
+            @RequestParam("_csrf_token") String csrfToken){
 
         logger.info("csrfToken: "+csrfToken);
         String referer=request.getHeader("Referer");
