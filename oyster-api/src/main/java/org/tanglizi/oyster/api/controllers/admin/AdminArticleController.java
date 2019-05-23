@@ -9,12 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.tanglizi.oyster.api.configurations.OysterApiConfig;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.ArticleService;
 import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.dao.repositories.ArticleRepository;
 import org.tanglizi.oyster.common.entities.Article;
 import org.tanglizi.oyster.common.utils.GlobalCacheKit;
+import org.tanglizi.oyster.common.utils.IPKit;
+import org.tanglizi.oyster.common.utils.SecurityKit;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -26,8 +29,8 @@ import java.util.List;
  *  articles        get     done
  *  articles/1      get     done
  *  articles/1      delete  done
- *  articles/1      update
- *  articles/1      post
+ *  articles/1      update  done
+ *  articles/1      post    done
  *
  * 1. csrf
  * 2. referer
@@ -84,20 +87,11 @@ public class AdminArticleController {
             @RequestParam("_csrf_token") String csrfToken){
 
         logger.info("csrfToken: "+csrfToken);
-        String referer=request.getHeader("Referer");
         RESTfulResponse response=null;
-        GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
+        SecurityKit.SecurityBlockType securityBlockType=SecurityKit.securityBlock(request, csrfToken);
 
-        // 这里应该匹配一下HOST
-        if (null == response && StringUtils.isBlank(referer)) {
+        if (null != securityBlockType)
             response = RESTfulResponse.fail();
-            logger.info("Blocked by referer.");
-        }
-
-        if (null == response && OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken))) {
-            response = RESTfulResponse.fail();
-            logger.info("Blocked by csrf_token.");
-        }
 
         if (null != response)
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -107,4 +101,88 @@ public class AdminArticleController {
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
 
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity<RESTfulResponse> postArticle(
+            Article article,
+            HttpServletRequest request,
+            @RequestParam("_csrf_token") String csrfToken){
+
+        logger.info("csrfToken: "+csrfToken);
+        RESTfulResponse response=null;
+        SecurityKit.SecurityBlockType securityBlockType=SecurityKit.securityBlock(request, csrfToken);
+
+        if (null != securityBlockType)
+            response = RESTfulResponse.fail();
+
+        if (null !=response)
+            response=chekcArticleValidity(article);
+
+        if (null != response) {
+            logger.info("Error response: "+response.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+
+        articleService.saveArticle(article);
+
+        return ResponseEntity.ok(RESTfulResponse.ok());
+    }
+
+    @PostMapping("/{articleId}")
+    @ResponseBody
+    public ResponseEntity<RESTfulResponse> updateArticle(
+            @PathVariable("articleId") Integer articleId,
+            Article article,
+            HttpServletRequest request,
+            @RequestParam("_csrf_token") String csrfToken){
+
+        logger.info("csrfToken: "+csrfToken);
+        RESTfulResponse response=null;
+        SecurityKit.SecurityBlockType securityBlockType=SecurityKit.securityBlock(request, csrfToken);
+
+        if (null != securityBlockType)
+            response = RESTfulResponse.fail();
+
+        if (null !=response && null == articleService.getArticle(articleId))
+            response=RESTfulResponse.fail("The article does not exists");
+
+        if (null !=response)
+            response=chekcArticleValidity(article);
+
+        if (null != response) {
+            logger.info("Error response: "+response.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+
+        /*
+        * TODO:
+        * test this, if there is a conflict
+        * */
+        article.setArticleId(articleId);
+        String errorMessage=articleService.updateArticleReturnErrorMessage(article);
+
+        if (null != errorMessage)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(RESTfulResponse.fail(errorMessage));
+
+        return ResponseEntity.ok(RESTfulResponse.ok());
+    }
+
+    private RESTfulResponse chekcArticleValidity(Article article){
+        RESTfulResponse response=null;
+
+        if (null == response && StringUtils.isBlank(article.getContent()))
+            response=RESTfulResponse.fail("The article can not be empty.");
+
+        if (null == response && article.getContent().length() > OysterApiConfig.ARTICLE_CONTENT_LENGTH)
+            response=RESTfulResponse.fail("The article content can not be too large.");
+
+        if (null == response && article.getTitle().length() > OysterApiConfig.ARTICLE_TITLE_LENGTH)
+            response=RESTfulResponse.fail("The article title can not be too large.");
+
+        SecurityKit.cleanXSS(article.getContent());
+        SecurityKit.cleanXSS(article.getTitle());
+
+        return response;
+    }
 }

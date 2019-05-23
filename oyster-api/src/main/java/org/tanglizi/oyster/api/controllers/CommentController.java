@@ -1,6 +1,7 @@
 package org.tanglizi.oyster.api.controllers;
 
 import org.apache.commons.lang3.StringUtils;
+import org.aspectj.weaver.AbstractReferenceTypeDelegate;
 import org.hibernate.annotations.GeneratorType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
+import org.tanglizi.oyster.api.services.ArticleService;
 import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 import org.tanglizi.oyster.common.entities.Comment;
@@ -21,6 +23,7 @@ import org.tanglizi.oyster.common.utils.StringKit;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
+import javax.smartcardio.CardTerminal;
 import java.security.Security;
 import java.util.List;
 
@@ -42,6 +45,9 @@ public class CommentController {
 
     @Resource(name = "ApiCommentService")
     private CommentService commentService;
+
+    @Resource(name = "ApiArticleService")
+    private ArticleService articleService;
 
     @GetMapping("/comments")
     @ResponseBody
