@@ -168,6 +168,9 @@ public class CommentController {
         if (null == response && !StringKit.isEmail(comment.getUserEmail()))
             response=RESTfulResponse.fail("Please enter a correct email.");
 
+        if (null == response && false == articleService.getArticle(articleId).getAllowComment())
+            response=RESTfulResponse.fail("The article does not allow comment");
+
         SecurityKit.cleanXSS(comment.getContent());
         SecurityKit.cleanXSS(comment.getUserName());
         SecurityKit.cleanXSS(comment.getUserEmail());
