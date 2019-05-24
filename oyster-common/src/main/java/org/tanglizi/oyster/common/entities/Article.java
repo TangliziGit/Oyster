@@ -32,6 +32,7 @@ public class Article {
     public String toString() {
         return "Article{" +
                 "articleId=" + articleId +
+                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", allowComment=" + allowComment +
                 ", hit=" + hit +
