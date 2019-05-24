@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/api/v1/admin/login")
-public class LoginController {
+public class AdminLoginController {
 
     @PostMapping
     public ResponseEntity<RESTfulResponse> login(@RequestParam("adminName") String adminName,
