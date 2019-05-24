@@ -109,13 +109,14 @@ public class AdminArticleController {
             @RequestParam("_csrf_token") String csrfToken){
 
         logger.info("csrfToken: "+csrfToken);
+        logger.info(article.toString());
         RESTfulResponse response=null;
         SecurityKit.SecurityBlockType securityBlockType=SecurityKit.securityBlock(request, csrfToken);
 
         if (null != securityBlockType)
             response = RESTfulResponse.fail();
 
-        if (null !=response)
+        if (null == response)
             response=chekcArticleValidity(article);
 
         if (null != response) {

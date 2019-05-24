@@ -42,8 +42,9 @@ public class SecurityKit {
 
     public static boolean isCsrfBlocked(String csrfToken){
         GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
+
         // Blocked by csrf_token
-        if (null == csrfToken || OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken)))
+        if (null == csrfToken || null == globalCache.get(csrfToken))
             return true;
         return false;
     }
@@ -62,8 +63,10 @@ public class SecurityKit {
         Object lastPostTime = globalCache.get(ipWithArgs);
         if (null != lastPostTime) {
             Long realInterval = System.currentTimeMillis() / 1000 - (Long) lastPostTime / 1000;
-            if (realInterval < interval)
+            if (realInterval < interval){
+                globalCache.set(ipWithArgs, System.currentTimeMillis());
                 return true;
+            }
         }
 
         return false;

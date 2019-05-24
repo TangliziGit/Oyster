@@ -184,7 +184,6 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(RESTfulResponse.fail(failMessage));
 
-        globalCache.set(ipWithAritleId, System.currentTimeMillis());
         return ResponseEntity.ok(RESTfulResponse.ok());
     }
 }

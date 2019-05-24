@@ -1,6 +1,7 @@
 package org.tanglizi.oyster.api.services.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,6 +16,7 @@ import java.util.Date;
 
 @Service("ApiArticleService")
 public class ArticleServiceImpl implements ArticleService {
+    @Autowired
     private ArticleRepository articleRepository;
 
     @Override
