@@ -20,13 +20,17 @@ import static org.tanglizi.oyster.common.dao.AbstractQuery.LogicType.OR;
 public abstract class AbstractQuery<T> {
     private Logger logger= LoggerFactory.getLogger(AbstractQuery.class);
     private List<LogicSpecificationPair> logicSpecificationPairs;
-    private LogicType combineLogicType=AND;
+    private LogicType combineLogicType;
+
+    protected AbstractQuery() {
+        combineLogicType = AND;
+    }
 
     public LogicType getCombineLogicType() {
         return combineLogicType;
     }
 
-    public void setCombineLogicType(LogicType combineLogicType) {
+    protected void setCombineLogicType(LogicType combineLogicType) {
         this.combineLogicType = combineLogicType;
     }
 
@@ -46,17 +50,17 @@ public abstract class AbstractQuery<T> {
             }
         }
         return spec;
-    };
+    }
 
     protected void addPredicate(List<Predicate> predicates, Field field, QueryWord qw, CriteriaBuilder cb,
-                                Object value, Root root){
+                                Object value, Root<T> root){
         String fieldName=field.getName();
         String column=qw.column();
         Path path=root.get(column);
 
         switch (qw.type()){
             case LIKE:
-                predicates.add(cb.like(path, "%"+((String)value)+"%"));
+                predicates.add(cb.like(path, "%"+ value +"%"));
                 break;
             case EQUAL:
                 predicates.add(cb.equal(path, value));
@@ -162,7 +166,7 @@ public abstract class AbstractQuery<T> {
         );
     }
 
-    public static <T> Specification<T> combineWithLogicType(AbstractQuery eqA, AbstractQuery eqB, LogicType type){
+    public static <T> Specification combineWithLogicType(AbstractQuery eqA, AbstractQuery eqB, LogicType type){
         Specification specA=eqA.toSpec(), specB=eqB.toSpec();
         switch (type){
             case AND:
@@ -179,11 +183,11 @@ public abstract class AbstractQuery<T> {
         return Specification.not(eq.toSpec());
     }
 
-    public static <T> Specification<T> combineWithAndLogic(AbstractQuery eqA, AbstractQuery eqB){
+    public static <T> Specification<T> combineWithAndLogic(AbstractQuery<T> eqA, AbstractQuery<T> eqB){
         return eqA.toSpec().and(eqB.toSpec());
     }
 
-    public static <T> Specification<T> combineWithOrLogic(AbstractQuery eqA, AbstractQuery eqB){
+    public static <T> Specification<T> combineWithOrLogic(AbstractQuery<T> eqA, AbstractQuery<T> eqB){
         return eqA.toSpec().or(eqB.toSpec());
     }
 
@@ -191,14 +195,14 @@ public abstract class AbstractQuery<T> {
         return combineWithXorLogic(eqA.toSpec(), eqB.toSpec());
     }
 
-    public AbstractQuery<T> and(AbstractQuery eq){
+    public AbstractQuery<T> and(AbstractQuery<T> eq){
         if (logicSpecificationPairs==null)
             logicSpecificationPairs=new ArrayList<>();
         this.logicSpecificationPairs.add(new LogicSpecificationPair(AND, eq.toSpec()));
         return this;
     }
 
-    public AbstractQuery<T> or(AbstractQuery eq){
+    public AbstractQuery<T> or(AbstractQuery<T> eq){
         if (logicSpecificationPairs==null)
             logicSpecificationPairs=new ArrayList<>();
         this.logicSpecificationPairs.add(new LogicSpecificationPair(OR, eq.toSpec()));
@@ -248,7 +252,7 @@ public abstract class AbstractQuery<T> {
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
-    public static @interface QueryWord {
+    public @interface QueryWord {
         String column() default "";
         MatchType type() default MatchType.EQUAL;
     }

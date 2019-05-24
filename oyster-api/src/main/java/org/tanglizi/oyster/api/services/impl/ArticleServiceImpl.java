@@ -11,12 +11,13 @@ import org.tanglizi.oyster.api.services.ArticleService;
 import org.tanglizi.oyster.common.dao.repositories.ArticleRepository;
 import org.tanglizi.oyster.common.entities.Article;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service("ApiArticleService")
 public class ArticleServiceImpl implements ArticleService {
-    @Autowired
+    @Resource
     private ArticleRepository articleRepository;
 
     @Override
@@ -44,7 +45,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public String updateArticleReturnErrorMessage(Article article) {
-        Article articleOld=null;
+        Article articleOld;
 
         if (null == article.getArticleId()
                 || (articleOld=articleRepository.findById(article.getArticleId()).orElse(null)) == null)

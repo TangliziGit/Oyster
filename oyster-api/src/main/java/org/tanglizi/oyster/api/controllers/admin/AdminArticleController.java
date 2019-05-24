@@ -1,10 +1,8 @@
 package org.tanglizi.oyster.api.controllers.admin;
 
-import org.apache.catalina.WebResourceRoot;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,15 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.ArticleService;
-import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
-import org.tanglizi.oyster.common.dao.repositories.ArticleRepository;
 import org.tanglizi.oyster.common.entities.Article;
-import org.tanglizi.oyster.common.utils.GlobalCacheKit;
-import org.tanglizi.oyster.common.utils.IPKit;
 import org.tanglizi.oyster.common.utils.SecurityKit;
 
 import javax.annotation.Resource;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -56,7 +49,7 @@ public class AdminArticleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(RESTfulResponse.fail("No article exists"));
 
-        RESTfulResponse response=RESTfulResponse.ok();
+        RESTfulResponse<List<Article>> response=RESTfulResponse.ok();
         response.setData(articles);
 
         return ResponseEntity.ok(response);
@@ -73,7 +66,7 @@ public class AdminArticleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(RESTfulResponse.fail("No article exists"));
 
-        RESTfulResponse response=RESTfulResponse.ok();
+        RESTfulResponse<Article> response=RESTfulResponse.ok();
         response.setData(article);
 
         return ResponseEntity.ok(response);
@@ -82,7 +75,7 @@ public class AdminArticleController {
     @DeleteMapping("/{articleId}")
     @ResponseBody
     public ResponseEntity<RESTfulResponse> deleteArticle(
-            @PathVariable("/{articleId}") Integer articleId,
+            @PathVariable("articleId") Integer articleId,
             HttpServletRequest request,
             @RequestParam("_csrf_token") String csrfToken){
 
@@ -172,7 +165,7 @@ public class AdminArticleController {
     private RESTfulResponse chekcArticleValidity(Article article){
         RESTfulResponse response=null;
 
-        if (null == response && StringUtils.isBlank(article.getContent()))
+        if (StringUtils.isBlank(article.getContent()))
             response=RESTfulResponse.fail("The article can not be empty.");
 
         if (null == response && article.getContent().length() > OysterApiConfig.ARTICLE_CONTENT_LENGTH)

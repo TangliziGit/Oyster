@@ -1,4 +1,4 @@
-package org.tanglizi.oyster.controllers;
+package org.tanglizi.oyster.front.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -6,20 +6,20 @@ public class RESTfulResponse<T> {
     private T data;
     private long timestamp;
 
-    public static RESTfulResponse ok(){
-        return new RESTfulResponse(true, "success");
+    public static <T> RESTfulResponse<T> ok(){
+        return new RESTfulResponse<>(true, "success");
     }
 
-    public static RESTfulResponse ok(String message){
-        return new RESTfulResponse(true, message);
+    public static <T> RESTfulResponse<T> ok(String message){
+        return new RESTfulResponse<>(true, message);
     }
 
-    public static RESTfulResponse fail(){
-        return new RESTfulResponse(false, "failure");
+    public static <T> RESTfulResponse<T> fail(){
+        return new RESTfulResponse<>(false, "failure");
     }
 
-    public static RESTfulResponse fail(String message){
-        return new RESTfulResponse(false, message);
+    public static <T> RESTfulResponse<T> fail(String message){
+        return new RESTfulResponse<>(false, message);
     }
 
     public RESTfulResponse(boolean success) {
