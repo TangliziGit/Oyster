@@ -48,6 +48,27 @@ public class SecurityKit {
         return false;
     }
 
+    public static boolean isOperationTooFrequent(String ip, long interval, String... arguments){
+        GlobalCacheKit globalCache=GlobalCacheKit.getCacheSingleton();
+
+        String ipWithArgs=ip;
+        StringBuilder stringBuilder=new StringBuilder();
+
+        for (String argument: arguments)
+            stringBuilder.append(":"+argument);
+
+        ipWithArgs+=stringBuilder.toString();
+
+        Object lastPostTime = globalCache.get(ipWithArgs);
+        if (null != lastPostTime) {
+            Long realInterval = System.currentTimeMillis() / 1000 - (Long) lastPostTime / 1000;
+            if (realInterval < interval)
+                return true;
+        }
+
+        return false;
+    }
+
     public enum SecurityBlockType{
         REFERER,
         CSRF

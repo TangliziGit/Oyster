@@ -151,22 +151,19 @@ public class CommentController {
         if (null != securityBlockType)
             response=RESTfulResponse.fail();
 
-        String ipWithAritleId = IPKit.getIPAddress(request)+":"+comment.getArticleId();
-        Object lastPostTime = globalCache.get(ipWithAritleId);
-        if (null == response && null != lastPostTime) {
-            Long interval = System.currentTimeMillis() / 1000 - (Long) lastPostTime / 1000;
-            if (interval < OysterApiConfig.COMMENT_POST_INTERVAL)
-                response = RESTfulResponse.fail("You comment this article too frequently.");
-        }
+        String ip=IPKit.getIPAddress(request);
+        if (null != response && SecurityKit.isOperationTooFrequent(ip,
+                OysterApiConfig.COMMENT_POST_INTERVAL, new String[] {"comment", "xx"}))
+            response=RESTfulResponse.fail("You comment too frequently");
 
         if (null == response && StringUtils.isBlank(comment.getContent()))
-            response=RESTfulResponse.fail("The comment can not be empty.");
+            response=RESTfulResponse.fail("The comment can not be empty");
 
         if (null == response && comment.getContent().length() > OysterApiConfig.COMMENT_LENGTH)
-            response=RESTfulResponse.fail("The comment can not be too large.");
+            response=RESTfulResponse.fail("The comment can not be too large");
 
         if (null == response && !StringKit.isEmail(comment.getUserEmail()))
-            response=RESTfulResponse.fail("Please enter a correct email.");
+            response=RESTfulResponse.fail("Please enter a correct email");
 
         if (null == response && false == articleService.getArticle(articleId).getAllowComment())
             response=RESTfulResponse.fail("The article does not allow comment");
