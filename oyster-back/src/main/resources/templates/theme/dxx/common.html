@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="resources">
+        <link rel="shortcut icon" th:href="@{/images/avatar.png}" />
+        <link rel="stylesheet" th:href="@{/css/style.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/github.min.css}" />
+        <script th:src="@{/webjars/jquery/3.4.0/jquery.min.js}"></script>
+        <script th:src="@{/js/highlight.min.js}"></script>
+        <script th:src="@{/js/common.js}"></script>
+    </div>
+</head>
+
+<body>
+
+<!-- nav class="main-nav" th:fragment="main-nav">
+    <form method="post" th:action="@{/search}" style="float: right;">
+        <input id="searchBar" type="text" style="font-size:small" name="searchLike" placeholder="Search for articles" />
+        <input id="searchBarSubmit" type="submit" style="display: none;" />
+    </form>
+    <a style="float: right;" th:href="@{/}">Home</a>
+    <a style="float: right;" th:href="@{/archives}">Archives</a>
+</nav-->
+
+<div class="profile" th:fragment="profile">
+    <section id="wrapper">
+        <header id="header">
+            <a th:href="@{/about}"><img class="2x" id="avatar" th:src="@{/images/avatar.png}" /></a>
+            <h1>Dxx</h1>
+            <h2>A simple Developer</h2>
+        </header>
+    </section>
+</div>
+
+<footer id="footer" th:fragment="footer">
+    <div id="social">
+        <a class="symbol" href="https://github.com/fuzhouxxdong"><!--i class="fa fa-github"--></i></a>
+    </div>
+    <p class="small">&copy; Copyright 2018 &nbsp;<i class="fa fa-heart" aria-hidden="true">&nbsp;Dxx</i></p>
+    <p class="small">Theme By &nbsp;<a href="https://github.com/fuzhouxxdong/hexo-theme-dxx">Dxx</a></p>
+</footer>
+
+</body>
+</html>

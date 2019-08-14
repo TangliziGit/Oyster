@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+
+    <div th:replace="themes/dxx/common::resources"></div>
+</head>
+<body>
+<!-- div th:replace="themes/dxx/common::main-nav"></div -->
+<div th:replace="themes/dxx/common::profile"></div>
+
+<section class="home" id="wrapper">
+    <ul id="post-list">
+        <li th:object="${article}" th:each="article: ${articles}">
+            <aside class="dates" th:text="${#dates.format(article.createTimestamp, 'MMM d')}"></aside>
+            <a th:href="@{'/articles/'+${article.articleId}}">
+                [[*{title}]]
+                <h2><p th:text="*{content.length() > 50} ? *{content.substring(0, 50)} : *{content}"></p></h2>
+            </a>
+        </li>
+    </ul>
+
+    <nav id="post-nav">
+        <span class="prev">
+            <a th:href="@{/index/(page=${page -1}, limit=${limit})}" th:if="${page} > 0"><span class="arrow">←</span>Newer Posts</a>
+        </span>
+        <span class="next">
+            <a th:href="@{/index/(page=${page +1}, limit=${limit})}" th:if="${page} < ${pageCount -1}">Older Posts<span class="arrow">→</span></a>
+        </span>
+    </nav>
+</section>
+
+<div th:replace="themes/dxx/common::footer"></div>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
