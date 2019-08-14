@@ -7,6 +7,8 @@
     <title th:text="${article.title}"></title>
 
     <div th:replace="themes/dxx/common::resources"></div>
+    <link rel="stylesheet" th:href="@{/css/simplemde.min.css}">
+    <script th:src="@{/js/simplemde.min.css}"></script>
 </head>
 <body>
 <!-- div th:replace="themes/dxx/common::main-nav"></div -->
@@ -17,57 +19,13 @@
         <header>
             <h1 th:text="${article.title}"></h1>
             <h2 class="headline">Jun 11, 2017 2:46[[${#dates.format(article.createTimestamp, 'MMM dd, yyyy h:mm')}]]&middot;?? words &middot;? minutes read</h2>
-            <div class="tags" style="font-size: small; margin: 0px 0px 40px 20px">
-                <span th:each="tag: ${tags}" style="float: left;margin-right: 2px; ">
-                    #[[${tag.name}]]
-                </span>
-            </div>
         </header>
 
-        <section id="post-body">
-            [(${markdownContent})]
+        <section id="editor-body">
         </section>
 
-        <nav id="post-nav">
-            <span class="prev">
-                <a th:href="@{'/articles/' + ${prevArticleId}}" th:if="${prevArticleId}"><span class="arrow">←</span>Newer Posts</a>
-            </span>
-            <span class="next">
-                <a th:href="@{'/articles/' + ${nextArticleId}}" th:if="${nextArticleId}">Older Posts<span class="arrow">→</span></a>
-            </span>
-        </nav>
     </article>
 
-    <div class="comment_editor">
-        <hr />
-
-        <form id="comment_form" th:action="@{/api/v1/comments}" method="post">
-            <!-- 默认垂直布局，float: left水平布局（width: 50%控制大小） -->
-            <input name="articleId" th:value="${article.articleId}" type="hidden" />
-            <input name="_csrf_token" th:value="${_csrf_token}" type="hidden" />
-            <input name="userName" type="text"  placeholder="Your Name" style="float: left; width: 50%;"/>
-            <input name="userEmail" type="email" placeholder="Your Email" style="float: left; width: 50%"/> <br />
-            <textarea name="content" type="text" style="resize: none; width: 100%; height:100px"></textarea> <br />
-        </form>
-        <button id="commentSubmit" style="float: right">Submit</button>
-    </div>
-
-    <div class="comments">
-        <hr />
-
-        <div th:each="comment: ${comments}">
-            <hr style="border: 1px dashed; margin-bottom: 10px" />
-
-            <span style="font-size: small; color: brown">
-                [[${comment.userName}]]
-                <span style="font-size: small; color: #bbbbbb;">
-                    ([[${comment.userEmail}]])
-                </span>
-                :
-            </span>
-            <p th:text="${comment.content}">Content</p>
-        </div>
-    </div>
 </section>
 
 <div th:replace="themes/dxx/common::footer"></div>
@@ -92,6 +50,8 @@
         })}
     );
 
+    var simplemde = new SimpleMDE({ element: document.getElementById("editor-body")});
+    simplemde.value([[${article.content}]]);
 </script>
 </body>
 </html>
