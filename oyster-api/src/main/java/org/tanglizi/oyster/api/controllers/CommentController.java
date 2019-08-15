@@ -153,7 +153,7 @@ public class CommentController {
 
         String ip=IPKit.getIPAddress(request);
         if (null != response && SecurityKit.isOperationTooFrequent(ip,
-                OysterApiConfig.COMMENT_POST_INTERVAL, new String[] {"comment", "xx"}))
+                OysterApiConfig.COMMENT_POST_INTERVAL, "comment", "xx"))
             response=RESTfulResponse.fail("You comment too frequently");
 
         if (null == response && StringUtils.isBlank(comment.getContent()))
@@ -165,7 +165,7 @@ public class CommentController {
         if (null == response && !StringKit.isEmail(comment.getUserEmail()))
             response=RESTfulResponse.fail("Please enter a correct email");
 
-        if (null == response && false == articleService.getArticle(articleId).getAllowComment())
+        if (null == response && !articleService.getArticle(articleId).getAllowComment())
             response=RESTfulResponse.fail("The article does not allow comment");
 
         SecurityKit.cleanXSS(comment.getContent());

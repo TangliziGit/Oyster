@@ -35,18 +35,14 @@ public class SecurityKit {
 
         // 这里应该匹配一下HOST
         // Blocked by referer
-        if (StringUtils.isBlank(referer))
-            return true;
-        return false;
+        return StringUtils.isBlank(referer);
     }
 
     public static boolean isCsrfBlocked(String csrfToken){
         GlobalCacheKit globalCache= GlobalCacheKit.getCacheSingleton();
 
         // Blocked by csrf_token
-        if (null == csrfToken || null == globalCache.get(csrfToken))
-            return true;
-        return false;
+        return null == csrfToken || null == globalCache.get(csrfToken);
     }
 
     public static boolean isOperationTooFrequent(String ip, long interval, String... arguments){
@@ -56,13 +52,13 @@ public class SecurityKit {
         StringBuilder stringBuilder=new StringBuilder();
 
         for (String argument: arguments)
-            stringBuilder.append(":"+argument);
+            stringBuilder.append(":").append(argument);
 
         ipWithArgs+=stringBuilder.toString();
 
         Object lastPostTime = globalCache.get(ipWithArgs);
         if (null != lastPostTime) {
-            Long realInterval = System.currentTimeMillis() / 1000 - (Long) lastPostTime / 1000;
+            long realInterval = System.currentTimeMillis() / 1000 - (Long) lastPostTime / 1000;
             if (realInterval < interval){
                 globalCache.set(ipWithArgs, System.currentTimeMillis());
                 return true;

@@ -3,7 +3,6 @@ package org.tanglizi.oyster.api.controllers.admin;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scripting.support.RefreshableScriptTargetSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
@@ -24,8 +23,10 @@ public class AdminCategoryController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<RESTfulResponse> addCategory(Category category,
-                                                       @RequestParam("_csrf_token") String csrfToken){
+    public ResponseEntity<RESTfulResponse> addCategory(
+            Category category,
+            @RequestParam("_csrf_token") String csrfToken){
+
         GlobalCacheKit globalCache=GlobalCacheKit.getCacheSingleton();
         RESTfulResponse response=null;
 
@@ -49,8 +50,10 @@ public class AdminCategoryController {
 
     @DeleteMapping
     @ResponseBody
-    public ResponseEntity<RESTfulResponse> deleteCategory(@RequestParam("categoryId") Integer categoryId,
-                                                          @RequestParam("_csrf_token") String csrfToken){
+    public ResponseEntity<RESTfulResponse> deleteCategory(
+            @RequestParam("categoryId") Integer categoryId,
+            @RequestParam("_csrf_token") String csrfToken){
+
         GlobalCacheKit globalCache = GlobalCacheKit.getCacheSingleton();
 
         if (null == csrfToken || !OysterCommonConfig.CRSF_TOKEN.equals(globalCache.get(csrfToken)))

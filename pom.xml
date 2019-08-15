@@ -22,6 +22,7 @@
         <module>oyster-api</module>
         <module>oyster-front</module>
         <module>oyster-runner</module>
+        <module>oyster-back</module>
     </modules>
 
 

@@ -1,4 +1,4 @@
-package org.tanglizi.oyster.front.configurations;
+package org.tanglizi.oyster.common.configurations;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.TagService;
-import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.entities.Tag;
-import org.tanglizi.oyster.common.utils.GlobalCacheKit;
 import org.tanglizi.oyster.common.utils.SecurityKit;
 
 import javax.annotation.Resource;

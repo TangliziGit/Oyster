@@ -19,9 +19,11 @@ import javax.servlet.http.HttpSession;
 public class AdminLoginController {
 
     @PostMapping
-    public ResponseEntity<RESTfulResponse> login(@RequestParam("adminName") String adminName,
-                                @RequestParam("adminPassword") String adminPassword,
-                                HttpSession session){
+    public ResponseEntity<RESTfulResponse> login(
+            @RequestParam("adminName") String adminName,
+            @RequestParam("adminPassword") String adminPassword,
+            HttpSession session){
+
         if (null == adminName || null == adminPassword ||
                 (!OysterCommonConfig.adminNameList.contains(adminName) || !OysterCommonConfig.adminPasswordList.contains(adminPassword))) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
