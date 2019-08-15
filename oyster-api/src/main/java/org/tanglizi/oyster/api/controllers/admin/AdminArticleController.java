@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.tanglizi.oyster.api.configurations.OysterApiConfig;
 import org.tanglizi.oyster.api.model.RESTfulResponse;
 import org.tanglizi.oyster.api.services.ArticleService;
+import org.tanglizi.oyster.common.configurations.OysterCommonConfig;
 import org.tanglizi.oyster.common.entities.Article;
 import org.tanglizi.oyster.common.utils.SecurityKit;
 
@@ -140,8 +141,11 @@ public class AdminArticleController {
         if (null !=response && null == articleService.getArticle(articleId))
             response=RESTfulResponse.fail("The article does not exists");
 
-        if (null !=response)
+        if (null !=response){
+            completeArticle(article);
+            System.out.println(article);
             response=chekcArticleValidity(article);
+        }
 
         if (null != response) {
             logger.info("Error response: "+response.getMessage());
@@ -178,5 +182,23 @@ public class AdminArticleController {
         SecurityKit.cleanXSS(article.getTitle());
 
         return response;
+    }
+
+    private void completeArticle(Article article){
+        if (null == article.getArticleId()) return;
+
+        Article oldArticle=articleService.getArticle(article.getArticleId());
+
+        if (null == article.getTitle())
+            article.setTitle(oldArticle.getTitle());
+        if (null == article.getContent())
+            article.setContent(oldArticle.getContent());
+        if (null == article.getAllowComment()){
+            Boolean oldAllowComment=oldArticle.getAllowComment();
+            if (null != oldAllowComment)
+                article.setAllowComment(oldAllowComment);
+            else
+                article.setAllowComment(OysterCommonConfig.defaultAllowComment);
+        }
     }
 }

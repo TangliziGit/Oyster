@@ -12,7 +12,7 @@ import org.tanglizi.oyster.common.entities.Article;
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Controller
+@Controller("BackIndexController")
 @RequestMapping("/back")
 public class IndexController {
 
@@ -20,17 +20,8 @@ public class IndexController {
     private ArticleService articleService;
 
     @GetMapping({"/index", "/home", "/"})
-    public String index(@RequestParam(name = "page", defaultValue = "0") Integer page,
-                        @RequestParam(name = "limit", defaultValue = "20") Integer limit,
-                        Map<String, Object> map){
-        Page<Article> articlePage=articleService.getArticlePage(page, limit);
-
-        map.put("articles", articlePage.getContent());
-        map.put("page", page);
-        map.put("limit", limit);
-        map.put("pageCount", articlePage.getTotalPages());
-
-        return OysterBackConfig.themePath+"index";
+    public String index(){
+        return "redirect:/back/articles";
     }
 
     @GetMapping("/about")

@@ -12,4 +12,6 @@ public class OysterCommonConfig {
     public static final String USER_TOKEN="USER_TOKEN";
     public static final List<String> adminNameList=Arrays.asList("admin");
     public static final List<String> adminPasswordList=Arrays.asList("admin");
+
+    public static final Boolean defaultAllowComment=true;
 }

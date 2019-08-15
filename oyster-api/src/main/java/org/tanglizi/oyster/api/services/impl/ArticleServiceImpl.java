@@ -23,7 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<Article> getArticlePage(int pageNumber, int limit) {
         return articleRepository.findAll(
-                PageRequest.of(pageNumber, limit, Sort.by(Sort.Direction.DESC, "createTimpestamp"))
+                PageRequest.of(pageNumber, limit, Sort.by(Sort.Direction.DESC, "createTimestamp"))
         );
     }
 

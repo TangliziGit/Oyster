@@ -3,6 +3,8 @@ package org.tanglizi.oyster;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.tanglizi.oyster.api.OysterApiApplication;
+import org.tanglizi.oyster.back.OysterBackApplication;
+import org.tanglizi.oyster.back.configurations.OysterBackConfig;
 import org.tanglizi.oyster.common.OysterCommonApplication;
 import org.tanglizi.oyster.front.OysterFrontApplication;
 
@@ -15,7 +17,8 @@ public class OysterRunnerApplication {
         SpringApplication.run(new Class[]{
                 OysterFrontApplication.class,
                 OysterApiApplication.class,
-                OysterCommonApplication.class
+                OysterCommonApplication.class,
+                OysterBackApplication.class
         }, args);
     }
 
