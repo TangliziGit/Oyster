@@ -6,23 +6,37 @@ This is a simple blog for oysters, built with Spring Boot, Spring Data JPA and T
 
 ## 部分功能截图
 
+<details>
+<summary>点击展开</summary>
+
 ![](https://s2.ax1x.com/2019/08/18/mMcQJS.png)
 ![](https://s2.ax1x.com/2019/08/18/mMcMi8.png)
 ![](https://s2.ax1x.com/2019/08/18/mMclRg.png)
+</details>
 
 ## 如何使用
 
 ### 环境需求
 
-- jdk 1.8 (or later)
+- jdk 1.8 (or later) / openjdk:8-jdk-alpine (for docker deployment)
+- mysql
 
 ### 部署方法
 
-直接运行jar，正经部署还没怎么考虑
+```bash
+# run it as root
+
+git clone https://github.com/TangliziGit/Oyster oyster
+cd oyster
+mvn clean install
+cd oyster-runner
+mvn install dockerfile:build
+docker run --net=host -t tanglizi/oyster-runner --name oyster
+```
 
 ### 运行方法
 
-```
+```bash
 git clone https://github.com/TangliziGit/Oyster oyster
 cd oyster
 mvn clean install
@@ -58,4 +72,4 @@ java -jar oyster-runner/target/oyster-runner-0.0.1-SNAPSHOT.jar
     - [x] 对提交评论和文章点击量的限制  
         *包括提交内容判误、提交频率、一段时间同ip不增加点击量、跨域提交*
 - docker部署支持
-    - [ ] 支持
+    - [x] 支持
