@@ -84,8 +84,10 @@ public class AdminArticleController {
         RESTfulResponse response=null;
         SecurityKit.SecurityBlockType securityBlockType=SecurityKit.securityBlock(request, csrfToken);
 
-        if (null != securityBlockType)
+        if (null != securityBlockType){
             response = RESTfulResponse.fail();
+            logger.info(securityBlockType.toString());
+        }
 
         if (null != response)
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -138,12 +140,12 @@ public class AdminArticleController {
         if (null != securityBlockType)
             response = RESTfulResponse.fail();
 
-        if (null !=response && null == articleService.getArticle(articleId))
+        if (null == response && null == articleService.getArticle(articleId))
             response=RESTfulResponse.fail("The article does not exists");
 
-        if (null !=response){
+        if (null == response){
             completeArticle(article);
-            System.out.println(article);
+            logger.info(article.toString());
             response=chekcArticleValidity(article);
         }
 

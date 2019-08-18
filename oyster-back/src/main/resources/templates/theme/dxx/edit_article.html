@@ -43,7 +43,7 @@
             processData: false,
             contentType: false,
             success: function(data){
-                // window.location.reload();
+                alert("Updated successfully");
             },
             error: function(XMLHttpRequest, textStatus){
                 var response=XMLHttpRequest.responseJSON;
@@ -68,7 +68,8 @@
             processData: false,
             contentType: false,
             success: function(data){
-                // window.location
+                alert("Deleted successfully")
+                window.location.href="/back";
             },
             error: function(XMLHttpRequest, textStatus){
                 var response=XMLHttpRequest.responseJSON;
