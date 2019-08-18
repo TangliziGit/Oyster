@@ -6,9 +6,13 @@ This is a simple blog for oysters, built with Spring Boot, Spring Data JPA and T
 
 ## 部分功能截图
 
+<details>
+<summary>点击展开</summary>
+
 ![](https://s2.ax1x.com/2019/08/18/mMcQJS.png)
 ![](https://s2.ax1x.com/2019/08/18/mMcMi8.png)
 ![](https://s2.ax1x.com/2019/08/18/mMclRg.png)
+</details>
 
 ## 如何使用
 
