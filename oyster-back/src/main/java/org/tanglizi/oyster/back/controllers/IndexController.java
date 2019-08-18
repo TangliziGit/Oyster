@@ -19,7 +19,7 @@ public class IndexController {
     @Resource(name = "ApiArticleService")
     private ArticleService articleService;
 
-    @GetMapping({"/index", "/home", "/"})
+    @GetMapping({"/index", "/home", "/", ""})
     public String index(){
         return "redirect:/back/articles";
     }
